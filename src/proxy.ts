@@ -30,10 +30,6 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
-  if (pathname === "/login" && session) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
   const response = NextResponse.next();
   if (hasInvalidSessionCookie) {
     response.cookies.delete(SESSION_COOKIE);

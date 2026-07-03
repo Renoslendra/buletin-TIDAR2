@@ -1,10 +1,20 @@
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
 import { LoginForm } from "@/components/auth/login-form";
 import { BrandLogo } from "@/components/layout/brand-logo";
 import { Card, CardContent } from "@/components/ui/card";
 import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
+import { getCurrentUser } from "@/lib/auth/current-user";
 
-export default function LoginPage() {
+export const dynamic = "force-dynamic";
+
+export default async function LoginPage() {
+  const user = await getCurrentUser().catch(() => null);
+
+  if (user) {
+    redirect("/dashboard");
+  }
+
   return (
     <main className="relative flex min-h-screen items-center justify-center bg-background px-6 py-12 selection:bg-primary/30">
       {/* Background glow effects */}

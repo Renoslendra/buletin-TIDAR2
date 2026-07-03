@@ -75,7 +75,11 @@ export function ScheduleUploadForm() {
       });
 
       if (!uploadResponse.ok) {
-        setError(await readErrorMessage(uploadResponse, "Upload jadwal gagal."));
+        const message = await readErrorMessage(uploadResponse, "Upload jadwal gagal.");
+        setError(message);
+        if (uploadResponse.status === 401) {
+          router.push(`/login?next=${encodeURIComponent("/schedules/new")}`);
+        }
         return;
       }
 
@@ -91,7 +95,12 @@ export function ScheduleUploadForm() {
       });
 
       if (!extractResponse.ok) {
-        setError(await readErrorMessage(extractResponse, "Ekstraksi jadwal gagal."));
+        const message = await readErrorMessage(extractResponse, "Ekstraksi jadwal gagal.");
+        setError(message);
+        if (extractResponse.status === 401) {
+          router.push(`/login?next=${encodeURIComponent(`/schedules/${scheduleId}/review`)}`);
+          return;
+        }
         router.push(`/schedules/${scheduleId}/review`);
         return;
       }
