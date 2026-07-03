@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum UserRole {
+  admin
+  reviewer
+}
+
+enum ScheduleType {
+  sekolah_sabat
+  khotbah
+}
+
+enum ExtractionStatus {
+  pending
+  processing
+  success
+  failed
+  reviewed
+}
+
+enum BulletinStatus {
+  draft
+  final
+  exported
+}
+
+model User {
+  id           String           @id @default(uuid()) 
+  name         String
+  email        String           @unique
+  passwordHash String           @map("password_hash")
+  role         UserRole         @default(admin)
+  createdAt    DateTime         @default(now()) @map("created_at")
+  uploads      ScheduleUpload[]
+  bulletins    Bulletin[]
+
+  @@map("users")
+}
+
+model ScheduleUpload {
+  id                 String                    @id @default(uuid()) 
+  type               ScheduleType
+  title              String
+  period             String?
+  originalFileUrl    String                    @map("original_file_url")
+  extractionStatus   ExtractionStatus          @default(pending) @map("extraction_status")
+  extractionRawJson  Json?                     @map("extraction_raw_json")
+  createdBy          String                    @map("created_by") 
+  createdAt          DateTime                  @default(now()) @map("created_at")
+  creator            User                      @relation(fields: [createdBy], references: [id])
+  sekolahSabatRows   ScheduleRowSekolahSabat[]
+  khotbahRows        ScheduleRowKhotbah[]
+
+  @@index([type, extractionStatus])
+  @@map("schedule_uploads")
+}
+
+model ScheduleRowSekolahSabat {
+  id                       String         @id @default(uuid()) 
+  scheduleUploadId         String         @map("schedule_upload_id") 
+  date                     DateTime       
+  dateText                 String         @map("date_text")
+  pemimpinDoaTutup         String?        @map("pemimpin_doa_tutup")
+  doaBukaAyatInti          String?        @map("doa_buka_ayat_inti")
+  mision                   String?
+  promosiPpRumahTangga     String?        @map("promosi_pp_rumah_tangga")
+  pembawaPersembahan       String?        @map("pembawa_persembahan")
+  confidence               Decimal        @default(0)
+  notes                    String?
+  scheduleUpload           ScheduleUpload @relation(fields: [scheduleUploadId], references: [id], onDelete: Cascade)
+  bulletins                Bulletin[]     @relation("SchoolSabbathSource")
+
+  @@index([scheduleUploadId, date])
+  @@map("schedule_rows_sekolah_sabat")
+}
+
+model ScheduleRowKhotbah {
+  id                   String         @id @default(uuid()) 
+  scheduleUploadId     String         @map("schedule_upload_id") 
+  date                 DateTime       
+  dateText             String         @map("date_text")
+  pianis               String?
+  chorister            String?
+  doaInvokasi          String?        @map("doa_invokasi")
+  ayatBersahutan       String?        @map("ayat_bersahutan")
+  laguBuka             String?        @map("lagu_buka")
+  doaSyafaat           String?        @map("doa_syafaat")
+  persembahanSyukur    String?        @map("persembahan_syukur")
+  jemaatMemuji         String?        @map("jemaat_memuji")
+  doaPersembahan       String?        @map("doa_persembahan")
+  jemaatMenyambut      String?        @map("jemaat_menyambut")
+  laguPujian1          String?        @map("lagu_pujian_1")
+  khotbahAnak          String?        @map("khotbah_anak")
+  jemaatMenyanyi       String?        @map("jemaat_menyanyi")
+  scoreboardVisiMisi   String?        @map("scoreboard_visi_misi")
+  ayatInti             String?        @map("ayat_inti")
+  laguTema             String?        @map("lagu_tema")
+  khotbah              String?
+  temaKhotbah          String?        @map("tema_khotbah")
+  laguTutup            String?        @map("lagu_tutup")
+  doaTutup             String?        @map("doa_tutup")
+  komunikasiJemaat     String?        @map("komunikasi_jemaat")
+  confidence           Decimal        @default(0)
+  notes                String?
+  scheduleUpload       ScheduleUpload @relation(fields: [scheduleUploadId], references: [id], onDelete: Cascade)
+  bulletins            Bulletin[]     @relation("SermonSource")
+
+  @@index([scheduleUploadId, date])
+  @@map("schedule_rows_khotbah")
+}
+
+model Bulletin {
+  id                  String                    @id @default(uuid()) 
+  date                DateTime                  
+  title               String
+  churchName          String                    @map("church_name")
+  schoolSabbathRowId  String?                   @map("school_sabbath_row_id") 
+  sermonRowId         String?                   @map("sermon_row_id") 
+  bulletinData        Json                      @map("bulletin_data")
+  status              BulletinStatus            @default(draft)
+  pdfUrl              String?                   @map("pdf_url")
+  pngUrl              String?                   @map("png_url")
+  createdBy           String                    @map("created_by") 
+  createdAt           DateTime                  @default(now()) @map("created_at")
+  updatedAt           DateTime                  @updatedAt @map("updated_at")
+  creator             User                      @relation(fields: [createdBy], references: [id])
+  schoolSabbathRow    ScheduleRowSekolahSabat?  @relation("SchoolSabbathSource", fields: [schoolSabbathRowId], references: [id])
+  sermonRow           ScheduleRowKhotbah?       @relation("SermonSource", fields: [sermonRowId], references: [id])
+
+  @@index([date, status])
+  @@map("bulletins")
+}
+
+model AppSettings {
+  id                 String   @id @default(uuid()) 
+  churchName         String   @default("GMAHK Tidar 2 Surabaya") @map("church_name")
+  logoUrl            String?  @map("logo_url")
+  sabbathSchoolTime  String   @default("09.00 - 10.15 WIB") @map("sabbath_school_time")
+  sermonServiceTime  String   @default("10.20 - 12.00 WIB") @map("sermon_service_time")
+  defaultSongs       Json     @map("default_songs")
+  defaultBulletinItems Json   @map("default_bulletin_items")
+  footerTagline      String   @default("Ibadah - Bertumbuh - Bersaksi") @map("footer_tagline")
+  activeTemplate     String   @default("classic") @map("active_template")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@map("app_settings")
+}

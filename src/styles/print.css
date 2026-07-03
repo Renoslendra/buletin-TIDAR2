@@ -1,0 +1,9 @@
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+.print-a4 {
+  width: 210mm;
+  min-height: 297mm;
+}

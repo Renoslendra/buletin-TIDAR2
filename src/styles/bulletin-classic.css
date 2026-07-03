@@ -1,0 +1,184 @@
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+.classic-bulletin-container {
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto;
+  background: #ffffff;
+  color: #111111;
+  font-family: "Century Gothic", var(--font-poppins), Arial, Helvetica, sans-serif;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.classic-header {
+  position: relative;
+  height: 23.4mm;
+}
+
+.classic-title {
+  position: absolute;
+  left: 23.8mm;
+  top: 5.2mm;
+  width: 74mm;
+}
+
+.classic-title-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.classic-church-block {
+  position: absolute;
+  left: 100.5mm;
+  top: 5.7mm;
+  color: #111111;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.classic-church-name {
+  font-size: 24.2px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.classic-date {
+  margin-top: 2.4mm;
+  font-size: 17.3px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.classic-top-info {
+  position: relative;
+  z-index: 2;
+  padding: 0 15mm;
+  margin-top: 0.2mm;
+  margin-bottom: 1.4mm;
+}
+
+.classic-line {
+  margin: 0;
+  color: #111111;
+  text-align: center;
+  font-weight: 400;
+}
+
+.classic-label {
+  font-weight: 700;
+}
+
+.classic-top-line {
+  min-height: 6.95mm;
+  font-size: 16px;
+  line-height: 1.22;
+}
+
+.classic-section-bar {
+  position: relative;
+  z-index: 2;
+  height: 8.7mm;
+  margin: 1.25mm 8mm 1.05mm 15.4mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e7e7e7;
+}
+
+.classic-section-bar h2 {
+  margin: 0;
+  color: #111111;
+  font-size: 15.4px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+}
+
+.classic-program-list {
+  position: relative;
+  z-index: 2;
+  padding: 0 15.4mm;
+}
+
+.classic-program-line,
+.classic-program-line-compact {
+  min-height: 6.95mm;
+  font-size: 15.7px;
+  line-height: 1.2;
+}
+
+.classic-program-list-compact .classic-line {
+  min-height: 7mm;
+  font-size: 15.2px;
+  line-height: 1.18;
+}
+
+.classic-program-list-compact .classic-sermon-preacher-line {
+  min-height: 5.8mm;
+}
+
+.classic-sermon-title {
+  position: relative;
+  z-index: 2;
+  max-width: 142mm;
+  margin: 0.15mm auto 1mm;
+  color: #111111;
+  text-align: center;
+  font-size: 17.6px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.classic-watermark {
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+  object-fit: contain;
+  filter: grayscale(1) contrast(0.25) brightness(1.72);
+}
+
+.classic-watermark-top {
+  right: 10.6mm;
+  top: 16.2mm;
+  width: 26mm;
+  height: 26mm;
+  opacity: 0.58;
+}
+
+.classic-watermark-bottom {
+  left: -13.4mm;
+  bottom: 37mm;
+  width: 67mm;
+  height: 67mm;
+  opacity: 0.54;
+}
+
+@media print {
+  body {
+    background: #ffffff !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .classic-bulletin-container {
+    box-shadow: none !important;
+    width: 210mm !important;
+    height: 297mm !important;
+  }
+}
