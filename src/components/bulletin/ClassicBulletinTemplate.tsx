@@ -57,10 +57,10 @@ export function BulletinTopInfoClassic({ items }: { items: ProgramItem[] }) {
   return (
     <section className="classic-top-info">
       {items.map((item, index) => (
-        <p key={`${item.label}-${index}`} className="classic-line classic-top-line">
-          <span className="classic-label">{item.label}</span>
-          <span> : </span>
-          <span>{item.value}</span>
+        <p key={`${item.label}-${index}`} className="classic-line classic-top-line classic-info-row">
+          <span className="classic-label">{getClassicLabel(item.label)}</span>
+          <span className="classic-colon">:</span>
+          <span className="classic-value">{item.value}</span>
         </p>
       ))}
     </section>
@@ -90,6 +90,31 @@ function renderInlineValue(value: string) {
   );
 }
 
+function renderClassicValue(item: ProgramItem) {
+  const label = item.label.trim().toUpperCase();
+  const value = item.value.trim();
+
+  if (label === "LSEL NO. 515" && value && !value.startsWith("\"")) {
+    return <strong>{`"${value}"`}</strong>;
+  }
+
+  return renderInlineValue(item.value);
+}
+
+function getClassicLabel(label: string) {
+  const normalized = label.trim().toUpperCase();
+
+  if (normalized === "KOMUNIKASI JEMAAT") {
+    return "KOMUNIKASI JEMAAT";
+  }
+
+  if (normalized === "AYAT DAN DOA PEMBUKA") {
+    return "Ayat & Doa Pembuka";
+  }
+
+  return label;
+}
+
 export function BulletinProgramListClassic({
   items,
   compact = false,
@@ -105,21 +130,23 @@ export function BulletinProgramListClassic({
         <p
           key={`${item.label}-${index}`}
           className={cn(
-            "classic-line",
+            "classic-line classic-program-row",
             compact ? "classic-program-line-compact" : "classic-program-line",
             item.label.trim().toUpperCase() === "KHOTBAH" && "classic-sermon-preacher-line",
+            item.label.trim().toUpperCase().startsWith("LSEL") && "classic-program-row-inline",
           )}
         >
-          <span className="classic-label">{item.label}</span>
           {item.label.trim().toUpperCase().startsWith("LSEL") ? (
             <>
+              <span className="classic-inline-label">{item.label}</span>
               <span> </span>
-              <span>{renderInlineValue(item.value)}</span>
+              <span className="classic-inline-value">{renderClassicValue(item)}</span>
             </>
           ) : (
             <>
-              <span> : </span>
-              <span>{renderInlineValue(item.value)}</span>
+              <span className="classic-label">{getClassicLabel(item.label)}</span>
+              <span className="classic-colon">:</span>
+              <span className="classic-value">{renderClassicValue(item)}</span>
             </>
           )}
         </p>

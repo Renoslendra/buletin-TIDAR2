@@ -169,7 +169,7 @@ export function buildBulletinData(input: {
       "default",
     ),
     createItem(
-      "Ayat dan Doa Pembuka",
+      "Ayat & Doa Pembuka",
       input.sekolahSabat?.doaBukaAyatInti,
       true,
       "sekolah_sabat",
