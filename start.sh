@@ -6,7 +6,7 @@ export PATH="/app/node_modules/.bin:$PATH"
 echo "[startup] DATABASE_URL: $DATABASE_URL"
 
 echo "[startup] Pushing database schema..."
-prisma db push --accept-data-loss
+npx prisma db push --accept-data-loss --config prisma.config.mjs
 
 echo "[startup] Running seed (idempotent)..."
 tsx prisma/seed.ts || echo "[startup] Seed skipped (data exists or error)"

@@ -13,7 +13,8 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 COPY prisma ./prisma/
-RUN npx prisma generate
+COPY prisma.config.mjs ./
+RUN npx prisma generate --config prisma.config.mjs
 
 # --- Build ---
 FROM base AS builder
@@ -45,8 +46,9 @@ COPY --from=builder /app/public ./public
 # Copy full node_modules (needed for prisma + seed scripts)
 COPY --from=deps /app/node_modules ./node_modules
 
-# Copy prisma schema, source files, and start script
+# Copy prisma schema, config, source files, and start script
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/prisma.config.mjs ./prisma.config.mjs
 COPY --from=builder /app/src ./src
 COPY start.sh ./start.sh
 RUN chmod +x start.sh
