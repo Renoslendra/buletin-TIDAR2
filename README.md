@@ -111,13 +111,6 @@ graph LR
 
 ## 📸 Screenshots
 
-> **📸 Cara menambahkan screenshot:**
-> 1. Jalankan aplikasi: `npm run dev`
-> 2. Buka di browser: `http://localhost:3000`
-> 3. Ambil screenshot setiap halaman
-> 4. Simpan di folder `docs/screenshots/`
-> 5. Push ke GitHub
-
 <div align="center">
 
 ### 🖥️ Desktop View
@@ -140,19 +133,6 @@ graph LR
 
 </div>
 
-### 📋 Daftar Halaman yang Perlu Di-screenshot
-
-| Halaman | URL | Keterangan |
-|:-------:|:---:|:----------:|
-| Login | `/login` | Form login |
-| Dashboard | `/dashboard` | Statistik & menu |
-| Jadwal | `/schedules` | Daftar jadwal |
-| Upload Jadwal | `/schedules/new` | Form upload |
-| Review Jadwal | `/schedules/[id]/review` | Tabel review |
-| Buletin Baru | `/bulletins/new` | Form generate |
-| Edit Buletin | `/bulletins/[id]/edit` | Editor |
-| Preview Buletin | `/bulletins/[id]/preview` | Preview A4 |
-| Riwayat | `/history` | Daftar buletin |
 
 ---
 
@@ -209,13 +189,6 @@ npx playwright install chromium
 
 # 7. Jalankan aplikasi
 npm run dev
-```
-
-### 🔑 Login Default
-
-```
-Email:    admin@tidar2.local
-Password: admin12345
 ```
 
 ---
@@ -428,24 +401,6 @@ npm run test -- bulletin-mapper
 ```
 
 ---
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Renoslendra/buletin-TIDAR2)
-
-### Manual Deployment
-
-```bash
-# Build
-npm run build
-
-# Start
-npm run start
-```
-
-Pastikan environment variables sudah diset di production.
 
 ---
 
