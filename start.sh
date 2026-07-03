@@ -3,16 +3,34 @@ set -e
 
 export PATH="/app/node_modules/.bin:$PATH"
 
-DATA_ROOT="${RAILWAY_VOLUME_MOUNT_PATH:-/app/data}"
+IS_RAILWAY=0
+if [ -n "$RAILWAY_ENVIRONMENT" ] || [ -n "$RAILWAY_PROJECT_ID" ] || [ -n "$RAILWAY_SERVICE_ID" ]; then
+  IS_RAILWAY=1
+fi
+
+ALLOW_EPHEMERAL=0
+case "${ALLOW_EPHEMERAL_PRODUCTION_STORAGE:-}" in
+  1|true|TRUE|yes|YES|on|ON) ALLOW_EPHEMERAL=1 ;;
+esac
+
+if [ -n "$RAILWAY_VOLUME_MOUNT_PATH" ]; then
+  DATA_ROOT="$RAILWAY_VOLUME_MOUNT_PATH"
+else
+  DATA_ROOT="/app/data"
+fi
+
+if [ "$NODE_ENV" = "production" ] && [ "$IS_RAILWAY" = "1" ] && [ -z "$RAILWAY_VOLUME_MOUNT_PATH" ] && [ "$ALLOW_EPHEMERAL" != "1" ]; then
+  echo "[startup] ERROR: Railway Volume is not attached."
+  echo "[startup] Data uploads and bulletins would be saved to ephemeral container storage and disappear on redeploy."
+  echo "[startup] Fix: attach a Railway Volume to this web service with mount path /app/data, then redeploy."
+  exit 1
+fi
+
 export DATABASE_URL="file:${DATA_ROOT}/dev.db"
 export STORAGE_ROOT="${DATA_ROOT}/storage"
 
 echo "[startup] DATABASE_URL: $DATABASE_URL"
 echo "[startup] STORAGE_ROOT: $STORAGE_ROOT"
-
-if [ -z "$RAILWAY_VOLUME_MOUNT_PATH" ] && [ "$NODE_ENV" = "production" ]; then
-  echo "[startup] WARNING: RAILWAY_VOLUME_MOUNT_PATH is not set. Data will not survive redeploys unless a Railway Volume is mounted."
-fi
 
 # Ensure data directories exist (Railway volume mount)
 mkdir -p "$STORAGE_ROOT/uploads" "$STORAGE_ROOT/exports"

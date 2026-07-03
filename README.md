@@ -242,7 +242,8 @@ Data aplikasi memakai SQLite dan file upload lokal. Di Railway, filesystem conta
 
 1. Attach Railway Volume ke service web.
 2. Gunakan mount path `/app/data`.
-3. Pastikan environment berikut tersedia:
+3. Redeploy service setelah Volume terpasang.
+4. Pastikan environment berikut tersedia:
 
 ```env
 SESSION_SECRET="isi-dengan-secret-minimal-32-karakter"
@@ -253,6 +254,17 @@ MIMO_BASE_URL=https://api.xiaomimimo.com/v1
 ```
 
 Saat Volume terpasang, Railway menyediakan `RAILWAY_VOLUME_MOUNT_PATH`. Startup app otomatis menyimpan database ke `${RAILWAY_VOLUME_MOUNT_PATH}/dev.db` dan file upload/export ke `${RAILWAY_VOLUME_MOUNT_PATH}/storage`.
+
+Startup production di Railway akan gagal jika `RAILWAY_VOLUME_MOUNT_PATH` tidak tersedia. Ini disengaja agar admin tidak bisa mengupload jadwal atau membuat buletin ke filesystem container yang akan hilang saat redeploy.
+
+Checklist setelah deploy:
+
+1. Buka `/api/health`.
+2. Pastikan `ok: true`.
+3. Pastikan `persistence.ok: true`.
+4. Pastikan `persistence.hasRailwayVolume: true`.
+
+Jika deployment gagal dengan pesan `Railway Volume is not attached`, attach Volume ke service web dengan mount path `/app/data`, lalu redeploy. Jangan upload jadwal baru sebelum health check persistence sudah `true`.
 
 ---
 

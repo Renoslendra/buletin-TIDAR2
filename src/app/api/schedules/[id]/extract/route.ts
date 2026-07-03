@@ -5,6 +5,10 @@ import { dateStringToDate } from "@/lib/date/indonesian-date";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
 import { requireSameOrigin } from "@/lib/http/request-guard";
 import { extractScheduleFromImage } from "@/lib/ocr/extract-schedule";
+import {
+  assertPersistentStorageConfigured,
+  PersistenceNotConfiguredError,
+} from "@/lib/runtime/persistence";
 
 export const runtime = "nodejs";
 
@@ -15,6 +19,7 @@ export async function POST(
   try {
     requireSameOrigin(request);
     await requireUser(request);
+    assertPersistentStorageConfigured();
     const { id } = await context.params;
     const schedule = await prisma.scheduleUpload.findUnique({ where: { id } });
 
@@ -120,10 +125,12 @@ export async function POST(
 
     return Response.json({ schedule: updated, provider: extraction.provider });
   } catch (error) {
-    const { id } = await context.params;
-    await prisma.scheduleUpload
-      .update({ where: { id }, data: { extractionStatus: "failed" } })
-      .catch(() => undefined);
+    if (!(error instanceof PersistenceNotConfiguredError)) {
+      const { id } = await context.params;
+      await prisma.scheduleUpload
+        .update({ where: { id }, data: { extractionStatus: "failed" } })
+        .catch(() => undefined);
+    }
     return handleRouteError(error);
   }
 }

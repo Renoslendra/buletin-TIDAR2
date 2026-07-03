@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db/prisma";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
 import { requireSameOrigin } from "@/lib/http/request-guard";
 import { buildBulletinData, defaultBulletinSettings } from "@/lib/mapping/bulletin-mapper";
+import { assertPersistentStorageConfigured } from "@/lib/runtime/persistence";
 
 const generateSchema = z.object({
   schoolScheduleId: z.string().uuid().optional().nullable(),
@@ -32,6 +33,7 @@ export async function POST(request: NextRequest) {
   try {
     requireSameOrigin(request);
     const user = await requireUser(request);
+    assertPersistentStorageConfigured();
     const body = generateSchema.parse(await request.json());
     const date = dateStringToDate(body.date);
 

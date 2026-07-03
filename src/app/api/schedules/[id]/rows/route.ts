@@ -5,6 +5,7 @@ import { dateStringToDate } from "@/lib/date/indonesian-date";
 import { prisma } from "@/lib/db/prisma";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
 import { requireSameOrigin } from "@/lib/http/request-guard";
+import { assertPersistentStorageConfigured } from "@/lib/runtime/persistence";
 import {
   khotbahRowSchema,
   sekolahSabatRowSchema,
@@ -21,6 +22,7 @@ export async function PATCH(
   try {
     requireSameOrigin(request);
     await requireUser(request);
+    assertPersistentStorageConfigured();
     const { id } = await context.params;
     const schedule = await prisma.scheduleUpload.findUnique({ where: { id } });
 

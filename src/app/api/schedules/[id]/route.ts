@@ -3,6 +3,7 @@ import { requireUser } from "@/lib/auth/current-user";
 import { prisma } from "@/lib/db/prisma";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
 import { requireSameOrigin } from "@/lib/http/request-guard";
+import { assertPersistentStorageConfigured } from "@/lib/runtime/persistence";
 
 export async function GET(
   request: NextRequest,
@@ -36,6 +37,7 @@ export async function DELETE(
   try {
     requireSameOrigin(request);
     await requireUser(request);
+    assertPersistentStorageConfigured();
     const { id } = await context.params;
 
     const schedule = await prisma.scheduleUpload.findUnique({ where: { id } });

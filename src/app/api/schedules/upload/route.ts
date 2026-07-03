@@ -4,6 +4,7 @@ import { requireUser } from "@/lib/auth/current-user";
 import { prisma } from "@/lib/db/prisma";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
 import { requireSameOrigin } from "@/lib/http/request-guard";
+import { assertPersistentStorageConfigured } from "@/lib/runtime/persistence";
 import { saveUploadedFile } from "@/lib/storage/local-storage";
 
 const typeSchema = z.enum(["sekolah_sabat", "khotbah"]);
@@ -14,6 +15,7 @@ export async function POST(request: NextRequest) {
   try {
     requireSameOrigin(request);
     const user = await requireUser(request);
+    assertPersistentStorageConfigured();
     const form = await request.formData();
     const file = form.get("file");
     const type = typeSchema.safeParse(form.get("type"));

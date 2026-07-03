@@ -6,6 +6,7 @@ import { A4_VIEWPORT, PLAYWRIGHT_SETUP_ERROR } from "@/lib/export/export-constan
 import { renderBulletinWithPlaywright } from "@/lib/export/playwright-renderer";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
 import { requireSameOrigin } from "@/lib/http/request-guard";
+import { assertPersistentStorageConfigured } from "@/lib/runtime/persistence";
 import { saveExportFile } from "@/lib/storage/local-storage";
 
 export const runtime = "nodejs";
@@ -17,6 +18,7 @@ export async function POST(
   try {
     requireSameOrigin(request);
     await requireUser(request);
+    assertPersistentStorageConfigured();
     const { id } = await context.params;
     const bulletin = await prisma.bulletin.findUnique({ where: { id } });
 

@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { getStorageRootFromEnv } from "@/lib/runtime/persistence";
 
 const ALLOWED_SCOPES = new Set(["uploads", "exports"]);
 const IMAGE_EXTENSIONS: Record<string, string> = {
@@ -10,25 +11,7 @@ const IMAGE_EXTENSIONS: Record<string, string> = {
 const SAFE_FILENAME_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".pdf"]);
 
 export function getStorageRoot() {
-  const configuredRoot = process.env.STORAGE_ROOT;
-  const railwayVolumePath = process.env.RAILWAY_VOLUME_MOUNT_PATH;
-
-  // If explicitly set to an absolute path, use it directly
-  if (configuredRoot && path.isAbsolute(configuredRoot)) {
-    return configuredRoot;
-  }
-
-  if (railwayVolumePath && path.isAbsolute(railwayVolumePath)) {
-    return path.join(railwayVolumePath, "storage");
-  }
-
-  // In production (Docker), use the persistent volume path
-  if (process.env.NODE_ENV === "production") {
-    return "/app/data/storage";
-  }
-
-  // Local development: use <project>/storage
-  return path.join(process.cwd(), "storage");
+  return getStorageRootFromEnv();
 }
 
 function sanitizeFilename(filename: string, fallbackExt = "") {

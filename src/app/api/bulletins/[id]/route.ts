@@ -5,6 +5,7 @@ import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db/prisma";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
 import { requireSameOrigin } from "@/lib/http/request-guard";
+import { assertPersistentStorageConfigured } from "@/lib/runtime/persistence";
 
 const patchSchema = z.object({
   title: z.string().min(1).optional(),
@@ -38,6 +39,7 @@ export async function PATCH(
   try {
     requireSameOrigin(request);
     await requireUser(request);
+    assertPersistentStorageConfigured();
     const { id } = await context.params;
     const body = patchSchema.parse(await request.json());
 
@@ -63,6 +65,7 @@ export async function DELETE(
   try {
     requireSameOrigin(request);
     await requireUser(request);
+    assertPersistentStorageConfigured();
     const { id } = await context.params;
 
     const bulletin = await prisma.bulletin.findUnique({ where: { id } });
