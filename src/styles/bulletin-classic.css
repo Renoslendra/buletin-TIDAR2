@@ -129,18 +129,22 @@
   z-index: 2;
   height: 8.7mm;
   margin: 1.25mm 12mm 1.05mm;
-  display: grid;
-  place-items: center;
   background: #e7e7e7;
 }
 
 .classic-section-bar h2 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
   margin: 0;
   color: #111111;
   font-size: 15.4px;
   font-weight: 700;
   line-height: 1.12;
   text-align: center;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
 }
 
 .classic-program-list {
@@ -181,10 +185,10 @@
 .classic-sermon-title {
   position: relative;
   z-index: 2;
-  width: calc(100% - 30.8mm);
-  max-width: 146mm;
+  width: 100%;
   box-sizing: border-box;
-  margin: 0.7mm auto 0.65mm;
+  margin: 0.45mm 0 0.55mm;
+  padding: 0 15.4mm;
   color: #111111;
   text-align: center;
   font-size: 17.6px;
