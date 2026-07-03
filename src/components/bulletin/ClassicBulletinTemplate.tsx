@@ -75,16 +75,22 @@ export function BulletinSectionBarClassic({ title }: { title: string }) {
   );
 }
 
+function formatClassicText(value: string) {
+  return value.replace(/"([^"]+)"/g, "“$1”");
+}
+
 function renderInlineValue(value: string) {
   const quotedTitleMatch = value.match(/^(".*?")(\s+ayat\s+\d+)?$/i);
 
   if (!quotedTitleMatch) {
-    return value;
+    return formatClassicText(value);
   }
+
+  const quotedTitle = formatClassicText(quotedTitleMatch[1]);
 
   return (
     <>
-      <strong>{quotedTitleMatch[1]}</strong>
+      <strong>{quotedTitle}</strong>
       {quotedTitleMatch[2] ? <strong>{quotedTitleMatch[2]}</strong> : null}
     </>
   );
@@ -95,7 +101,7 @@ function renderClassicValue(item: ProgramItem) {
   const value = item.value.trim();
 
   if (label === "LSEL NO. 515" && value && !value.startsWith("\"")) {
-    return <strong>{`"${value}"`}</strong>;
+    return <strong>{`“${value}”`}</strong>;
   }
 
   return renderInlineValue(item.value);
