@@ -46,4 +46,29 @@ describe("buildBulletinData", () => {
     expect(data.sermon.preacher).toBe(PLACEHOLDER);
     expect(data.validation_notes.length).toBeGreaterThan(2);
   });
+
+  it.each([
+    ["Bpk. Jonner.P (PP)", "Pelayanan Perorangan", "Bpk. Jonner.P"],
+    ["Ibu Mulyono (RT)", "Rumah Tangga", "Ibu Mulyono"],
+    ["ibu yuni.p (rt)", "Rumah Tangga", "ibu yuni.p"],
+    ["PP: Bpk. Agung Wijaya", "Pelayanan Perorangan", "Bpk. Agung Wijaya"],
+    ["Ibu Martha", "Pelayanan Perorangan", "Ibu Martha"],
+  ])(
+    "maps the promotion marker in %s to the correct bulletin label",
+    (promotion, expectedLabel, expectedValue) => {
+      const data = buildBulletinData({
+        date: "2026-07-11",
+        sekolahSabat: {
+          date: "2026-07-11",
+          promosiPpRumahTangga: promotion,
+        },
+      });
+
+      const promotionItem = data.sekolah_sabat_items.find(
+        (item) => item.label === expectedLabel && item.source === "sekolah_sabat",
+      );
+
+      expect(promotionItem?.value).toBe(expectedValue);
+    },
+  );
 });

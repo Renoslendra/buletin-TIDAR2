@@ -2,7 +2,10 @@ import {
   formatDateIndonesianUpper,
   normalizeDateInput,
 } from "@/lib/date/indonesian-date";
-import { expandAbbreviations, isFirstSabbathOfMonth } from "@/lib/text/abbreviations";
+import {
+  isFirstSabbathOfMonth,
+  parsePromosiPpRumahTangga,
+} from "@/lib/text/abbreviations";
 import type {
   BulletinData,
   BulletinSettings,
@@ -131,6 +134,9 @@ export function buildBulletinData(input: {
   };
 
   const isFirstSabat = isFirstSabbathOfMonth(selectedDate);
+  const promosiPpRumahTangga = parsePromosiPpRumahTangga(
+    input.sekolahSabat?.promosiPpRumahTangga,
+  );
 
   const topInfo = [
     createItem(
@@ -182,8 +188,8 @@ export function buildBulletinData(input: {
       "default",
     ),
     createItem(
-      "Pelayanan Perorangan",
-      expandAbbreviations(input.sekolahSabat?.promosiPpRumahTangga),
+      promosiPpRumahTangga.label,
+      promosiPpRumahTangga.value,
       false,
       "sekolah_sabat",
     ),
