@@ -197,6 +197,7 @@
   letter-spacing: 0;
   text-transform: uppercase;
   text-wrap: balance;
+  transform: translateX(-1.2mm);
 }
 
 .classic-watermark {
