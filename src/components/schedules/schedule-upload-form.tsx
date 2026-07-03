@@ -9,6 +9,34 @@ import { FileUploadDropzone } from "@/components/ui/file-upload-dropzone";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 
+const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+const ALLOWED_UPLOAD_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
+
+async function readErrorMessage(response: Response, fallback: string) {
+  const statusSuffix = response.status ? ` (HTTP ${response.status})` : "";
+  const contentType = response.headers.get("content-type") ?? "";
+
+  if (contentType.includes("application/json")) {
+    const body = (await response.json().catch(() => null)) as { error?: string } | null;
+    return body?.error ?? `${fallback}${statusSuffix}`;
+  }
+
+  const text = (await response.text().catch(() => "")).trim();
+  return text ? `${fallback} ${text.slice(0, 240)}` : `${fallback}${statusSuffix}`;
+}
+
+function validateFile(file: File) {
+  if (file.size > MAX_UPLOAD_BYTES) {
+    return "Ukuran file maksimal 10 MB.";
+  }
+
+  if (file.type && !ALLOWED_UPLOAD_TYPES.has(file.type)) {
+    return "Format file harus PNG, JPG, JPEG, atau WebP.";
+  }
+
+  return null;
+}
+
 export function ScheduleUploadForm() {
   const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
@@ -25,43 +53,60 @@ export function ScheduleUploadForm() {
       return;
     }
 
+    const fileError = validateFile(file);
+    if (fileError) {
+      setError(fileError);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
-    const form = new FormData();
-    form.set("file", file);
-    form.set("type", type);
-    form.set("title", title);
-    form.set("period", period);
+    try {
+      const form = new FormData();
+      form.set("file", file);
+      form.set("type", type);
+      form.set("title", title);
+      form.set("period", period);
 
-    const uploadResponse = await fetch("/api/schedules/upload", {
-      method: "POST",
-      body: form,
-    });
+      const uploadResponse = await fetch("/api/schedules/upload", {
+        method: "POST",
+        body: form,
+      });
 
-    const uploadBody = await uploadResponse.json().catch(() => null);
+      if (!uploadResponse.ok) {
+        setError(await readErrorMessage(uploadResponse, "Upload jadwal gagal."));
+        return;
+      }
 
-    if (!uploadResponse.ok) {
-      setLoading(false);
-      setError(uploadBody?.error ?? "Upload jadwal gagal.");
-      return;
-    }
+      const uploadBody = await uploadResponse.json().catch(() => null);
+      const scheduleId = uploadBody?.schedule?.id;
+      if (typeof scheduleId !== "string") {
+        setError("Upload jadwal gagal. Respons server tidak valid.");
+        return;
+      }
 
-    const scheduleId = uploadBody.schedule.id;
-    const extractResponse = await fetch(`/api/schedules/${scheduleId}/extract`, {
-      method: "POST",
-    });
-    const extractBody = await extractResponse.json().catch(() => null);
-    setLoading(false);
+      const extractResponse = await fetch(`/api/schedules/${scheduleId}/extract`, {
+        method: "POST",
+      });
 
-    if (!extractResponse.ok) {
-      setError(extractBody?.error ?? "Ekstraksi jadwal gagal.");
+      if (!extractResponse.ok) {
+        setError(await readErrorMessage(extractResponse, "Ekstraksi jadwal gagal."));
+        router.push(`/schedules/${scheduleId}/review`);
+        return;
+      }
+
       router.push(`/schedules/${scheduleId}/review`);
-      return;
+      router.refresh();
+    } catch (error) {
+      setError(
+        error instanceof TypeError
+          ? "Tidak bisa menghubungi server. Periksa koneksi atau jalankan ulang aplikasi."
+          : "Upload jadwal gagal.",
+      );
+    } finally {
+      setLoading(false);
     }
-
-    router.push(`/schedules/${scheduleId}/review`);
-    router.refresh();
   }
 
   return (
