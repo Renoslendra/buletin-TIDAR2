@@ -4,4 +4,4 @@ export const A4_VIEWPORT = {
 };
 
 export const PLAYWRIGHT_SETUP_ERROR =
-  "Pastikan dev server berjalan dan browser Playwright sudah terpasang dengan `npx playwright install chromium`.";
+  "Pastikan server export berjalan dan browser Playwright Chromium sudah terpasang.";

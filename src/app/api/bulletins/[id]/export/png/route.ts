@@ -1,8 +1,9 @@
 import type { NextRequest } from "next/server";
-import { chromium } from "playwright";
 import { requireUser } from "@/lib/auth/current-user";
 import { SESSION_COOKIE } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/prisma";
+import { A4_VIEWPORT, PLAYWRIGHT_SETUP_ERROR } from "@/lib/export/export-constants";
+import { renderBulletinWithPlaywright } from "@/lib/export/playwright-renderer";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
 import { requireSameOrigin } from "@/lib/http/request-guard";
 import { saveExportFile } from "@/lib/storage/local-storage";
@@ -23,39 +24,20 @@ export async function POST(
       return jsonError("Buletin tidak ditemukan.", 404);
     }
 
-    const baseUrl =
-      process.env.EXPORT_BASE_URL ?? process.env.APP_BASE_URL ?? new URL(request.url).origin;
-    const renderOrigin = new URL(baseUrl).origin;
     const session = request.cookies.get(SESSION_COOKIE)?.value;
 
     try {
-      const browser = await chromium.launch({ headless: true });
-      const page = await browser.newPage({
-        viewport: { width: 1080, height: 1530 },
+      const png = await renderBulletinWithPlaywright({
+        requestUrl: request.url,
+        bulletinId: id,
+        session,
+        viewport: A4_VIEWPORT,
         deviceScaleFactor: 2,
+        render: async (page) => {
+          const target = page.locator("#bulletin-page");
+          return target.screenshot({ type: "png" });
+        },
       });
-
-      if (session) {
-        await page.context().addCookies([
-          {
-            name: SESSION_COOKIE,
-            value: session,
-            url: renderOrigin,
-            httpOnly: true,
-            sameSite: "Lax",
-          },
-        ]);
-      }
-
-      await page.goto(`${renderOrigin}/bulletins/${id}/preview?print=1`, {
-        waitUntil: "domcontentloaded",
-        timeout: 15000,
-      });
-      // Wait for fonts and rendering to complete
-      await page.waitForTimeout(3000);
-      const target = page.locator("#bulletin-page");
-      const png = await target.screenshot({ type: "png" });
-      await browser.close();
 
       const saved = await saveExportFile(`buletin-${id}.png`, Buffer.from(png));
       const updated = await prisma.bulletin.update({
@@ -66,7 +48,7 @@ export async function POST(
       return Response.json({ bulletin: updated, url: saved.url });
     } catch (error) {
       return jsonError(
-        "Export PNG gagal. Pastikan dev server berjalan dan browser Playwright sudah terpasang.",
+        `Export PNG gagal. ${PLAYWRIGHT_SETUP_ERROR}`,
         500,
         error instanceof Error ? error.message : error,
       );

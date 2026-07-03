@@ -10,6 +10,7 @@ FROM base AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json ./
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 RUN npm install
 
 COPY prisma ./prisma/
@@ -34,6 +35,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -45,6 +47,11 @@ COPY --from=builder /app/public ./public
 
 # Copy full node_modules (needed for prisma + seed scripts)
 COPY --from=deps /app/node_modules ./node_modules
+
+# Install Chromium and Linux dependencies required by Playwright export routes.
+RUN npx playwright install --with-deps chromium \
+    && rm -rf /var/lib/apt/lists/* \
+    && chown -R nextjs:nodejs /ms-playwright
 
 # Copy prisma schema, config, source files, and start script
 COPY --from=builder /app/prisma ./prisma
