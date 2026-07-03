@@ -24,6 +24,7 @@ COPY --from=deps /app/src/generated ./src/generated
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV DATABASE_URL="file:./build-placeholder.db"
 RUN npm run build
 
 # --- Production ---
