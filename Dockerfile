@@ -54,12 +54,16 @@ COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY start.sh ./start.sh
 RUN chmod +x start.sh
 
-# Create storage, data, and cache directories with proper permissions
-RUN mkdir -p storage/uploads storage exports data .next/cache \
-    && chown -R nextjs:nodejs storage data .next/cache
+# Create all necessary directories with proper permissions
+# - data/ : Railway volume mount point (database + storage)
+# - .next/cache : Next.js image optimization cache
+RUN mkdir -p data/storage/uploads data/storage/exports .next/cache \
+    && chown -R nextjs:nodejs data .next/cache
 
 # Database lives in /app/data (mount a Railway volume here)
 ENV DATABASE_URL="file:/app/data/dev.db"
+# Storage also lives in /app/data so files persist across deploys
+ENV STORAGE_ROOT="/app/data/storage"
 
 EXPOSE 3000
 ENV PORT=3000

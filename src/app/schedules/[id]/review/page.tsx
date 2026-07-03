@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/layout/page-header";
 import { ScheduleReviewTable } from "@/components/schedules/schedule-review-table";
@@ -97,11 +97,10 @@ export default async function ReviewSchedulePage({
             <div className="mb-3 text-sm font-bold text-on-surface">File Asli</div>
             {isImage ? (
               <div className="overflow-hidden rounded-xl border border-outline bg-surface-dim">
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={schedule.originalFileUrl}
                   alt={schedule.title}
-                  width={700}
-                  height={900}
                   className="h-auto max-h-[70vh] w-full object-contain"
                 />
               </div>
