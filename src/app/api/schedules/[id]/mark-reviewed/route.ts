@@ -2,12 +2,14 @@ import type { NextRequest } from "next/server";
 import { requireUser } from "@/lib/auth/current-user";
 import { prisma } from "@/lib/db/prisma";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
+import { requireSameOrigin } from "@/lib/http/request-guard";
 
 export async function POST(
   request: NextRequest,
   context: { params: Promise<{ id: string }> },
 ) {
   try {
+    requireSameOrigin(request);
     await requireUser(request);
     const { id } = await context.params;
     const schedule = await prisma.scheduleUpload.findUnique({

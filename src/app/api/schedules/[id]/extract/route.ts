@@ -3,6 +3,7 @@ import { requireUser } from "@/lib/auth/current-user";
 import { prisma } from "@/lib/db/prisma";
 import { dateStringToDate } from "@/lib/date/indonesian-date";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
+import { requireSameOrigin } from "@/lib/http/request-guard";
 import { extractScheduleFromImage } from "@/lib/ocr/extract-schedule";
 
 export const runtime = "nodejs";
@@ -12,6 +13,7 @@ export async function POST(
   context: { params: Promise<{ id: string }> },
 ) {
   try {
+    requireSameOrigin(request);
     await requireUser(request);
     const { id } = await context.params;
     const schedule = await prisma.scheduleUpload.findUnique({ where: { id } });

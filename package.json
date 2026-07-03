@@ -12,8 +12,10 @@
     "test:watch": "vitest",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
     "prisma:studio": "prisma studio",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "deploy:check": "npm run typecheck && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
     "@google/genai": "^2.10.0",
@@ -26,7 +28,7 @@
     "framer-motion": "^12.42.2",
     "jose": "^6.2.3",
     "lucide-react": "^1.23.0",
-    "next": "16.2.9",
+    "next": "16.2.10",
     "openai": "^6.45.0",
     "pg": "^8.22.0",
     "playwright": "^1.61.1",
@@ -54,5 +56,11 @@
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
+  },
+  "overrides": {
+    "@prisma/dev": {
+      "@hono/node-server": "1.19.13"
+    },
+    "postcss": "8.5.16"
   }
 }

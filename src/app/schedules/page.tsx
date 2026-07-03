@@ -27,7 +27,8 @@ export default async function SchedulesPage() {
         },
       },
     });
-  } catch {
+  } catch (err) {
+    console.error("[Schedules] DB error:", err);
     error = "Database belum siap.";
   }
 

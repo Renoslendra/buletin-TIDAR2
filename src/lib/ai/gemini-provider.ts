@@ -43,7 +43,7 @@ const KHOTBAH_JSON_SCHEMA = `{
       "jemaat_menyambut": "LSEL No. XXX atau null",
       "lagu_pujian_1": "keterangan atau null",
       "khotbah_anak": "nama atau null",
-      "lagu_pujian_2": "keterangan atau null",
+      "jemaat_menyanyi": "LSEL No. XXX atau null",
       "scoreboard_visi_misi": "keterangan atau null",
       "ayat_inti": "ayat atau null",
       "lagu_tema": "LSEL No. XXX atau null",

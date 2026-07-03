@@ -3,6 +3,7 @@ import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/layout/page-header";
 import { Alert } from "@/components/ui/alert";
 import { LinkButton } from "@/components/ui/link-button";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import { prisma } from "@/lib/db/prisma";
 import type { BulletinData } from "@/types/bulletin";
 
@@ -17,6 +18,13 @@ export default async function PreviewBulletinPage({
 }) {
   const { id } = await params;
   const { print } = await searchParams;
+  const user = await getCurrentUser();
+
+  if (!user) {
+    const error = <Alert tone="danger">Sesi tidak valid. Silakan login ulang.</Alert>;
+    return print === "1" ? <main>{error}</main> : <AppShell>{error}</AppShell>;
+  }
+
   const bulletin = await prisma.bulletin.findUnique({ where: { id } }).catch(() => null);
 
   if (!bulletin) {

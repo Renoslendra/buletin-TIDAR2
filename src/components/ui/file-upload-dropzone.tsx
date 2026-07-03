@@ -21,11 +21,11 @@ export function FileUploadDropzone({
       <span className="text-sm font-semibold text-on-surface">
         {file ? file.name : "Pilih file jadwal"}
       </span>
-      <span className="text-xs text-on-surface-variant">PNG, JPG, JPEG, atau PDF hingga 10 MB</span>
+      <span className="text-xs text-on-surface-variant">PNG, JPG, JPEG, atau WebP hingga 10 MB</span>
       <input
         className="sr-only"
         type="file"
-        accept="image/png,image/jpeg,application/pdf"
+        accept="image/png,image/jpeg,image/webp"
         onChange={(event) => onFileChange(event.target.files?.[0] ?? null)}
       />
     </label>

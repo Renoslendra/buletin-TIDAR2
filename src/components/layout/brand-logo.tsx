@@ -21,8 +21,7 @@ export function BrandLogo({
         alt="Advent Jemaat Tidar 2"
         width={size}
         height={size}
-        priority={size >= 56}
-        className={cn("shrink-0 rounded-md object-contain", imageClassName)}
+        className={cn("shrink-0 rounded-md object-cover", imageClassName)}
       />
       <div className={cn("font-bold tracking-wide", textClassName)}>SabatFlow</div>
     </div>

@@ -4,6 +4,7 @@ import { requireUser } from "@/lib/auth/current-user";
 import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db/prisma";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
+import { requireSameOrigin } from "@/lib/http/request-guard";
 
 const patchSchema = z.object({
   title: z.string().min(1).optional(),
@@ -35,6 +36,7 @@ export async function PATCH(
   context: { params: Promise<{ id: string }> },
 ) {
   try {
+    requireSameOrigin(request);
     await requireUser(request);
     const { id } = await context.params;
     const body = patchSchema.parse(await request.json());
@@ -59,6 +61,7 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> },
 ) {
   try {
+    requireSameOrigin(request);
     await requireUser(request);
     const { id } = await context.params;
 

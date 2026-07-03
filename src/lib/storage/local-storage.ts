@@ -4,7 +4,16 @@ import path from "node:path";
 const ALLOWED_SCOPES = new Set(["uploads", "exports"]);
 
 export function getStorageRoot() {
-  return path.join(process.cwd(), "storage");
+  const configuredRoot = process.env.STORAGE_ROOT;
+  if (!configuredRoot || configuredRoot === "storage") {
+    return path.join(process.cwd(), "storage");
+  }
+
+  if (!path.isAbsolute(configuredRoot)) {
+    throw new Error("STORAGE_ROOT harus absolute path atau bernilai \"storage\".");
+  }
+
+  return configuredRoot;
 }
 
 function sanitizeFilename(filename: string) {
@@ -25,8 +34,11 @@ export function getStoragePath(scope: "uploads" | "exports", filename: string) {
   }
 
   const safeName = path.basename(filename);
-  const resolved = path.resolve(getStorageRoot(), scope, safeName);
-  const scopeRoot = path.resolve(getStorageRoot(), scope);
+  const scopeRoot =
+    scope === "uploads"
+      ? path.resolve(getStorageRoot(), "uploads")
+      : path.resolve(getStorageRoot(), "exports");
+  const resolved = path.resolve(scopeRoot, safeName);
 
   if (!resolved.startsWith(scopeRoot)) {
     throw new Error("Path storage tidak valid.");
@@ -43,11 +55,11 @@ export async function saveUploadedFile(file: File) {
   const allowedTypes = new Set([
     "image/png",
     "image/jpeg",
-    "application/pdf",
+    "image/webp",
   ]);
 
   if (!allowedTypes.has(file.type)) {
-    throw new Error("Format file harus PNG, JPG, JPEG, atau PDF.");
+    throw new Error("Format file harus PNG, JPG, JPEG, atau WebP.");
   }
 
   const filename = sanitizeFilename(file.name);

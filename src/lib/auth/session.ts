@@ -11,6 +11,10 @@ export type SessionUser = {
 
 function getSecret() {
   const value = process.env.SESSION_SECRET ?? "development-only-change-me";
+  if (process.env.NODE_ENV === "production" && value.length < 32) {
+    throw new Error("SESSION_SECRET production wajib minimal 32 karakter.");
+  }
+
   return new TextEncoder().encode(value);
 }
 

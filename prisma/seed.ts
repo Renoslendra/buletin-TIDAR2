@@ -1,4 +1,6 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+import path from "path";
+dotenv.config({ path: path.resolve(__dirname, "../.env.local") });
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaLibSql } from "@prisma/adapter-libsql";
 import bcrypt from "bcryptjs";
@@ -12,14 +14,30 @@ const adapter = new PrismaLibSql({ url });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  const passwordHash = await bcrypt.hash("admin12345", 12);
+  const adminName = process.env.ADMIN_NAME ?? "Admin Tidar 2";
+  const adminEmail = (process.env.ADMIN_EMAIL ?? "admin@tidar2.local").toLowerCase();
+  const adminPassword = process.env.ADMIN_PASSWORD ?? "admin12345";
+  const isProduction = process.env.NODE_ENV === "production";
+
+  if (isProduction && (!process.env.ADMIN_PASSWORD || adminPassword.length < 12)) {
+    throw new Error("ADMIN_PASSWORD production wajib diisi dan minimal 12 karakter.");
+  }
+
+  const passwordHash = await bcrypt.hash(adminPassword, 12);
+  const shouldUpdateAdminPassword = Boolean(process.env.ADMIN_PASSWORD);
 
   const admin = await prisma.user.upsert({
-    where: { email: "admin@tidar2.local" },
-    update: {},
+    where: { email: adminEmail },
+    update: shouldUpdateAdminPassword
+      ? {
+          name: adminName,
+          passwordHash,
+          role: "admin",
+        }
+      : {},
     create: {
-      name: "Admin Tidar 2",
-      email: "admin@tidar2.local",
+      name: adminName,
+      email: adminEmail,
       passwordHash,
       role: "admin",
     },
@@ -52,6 +70,13 @@ async function main() {
 
   const uploadCount = await prisma.scheduleUpload.count();
   if (uploadCount > 0) {
+    return;
+  }
+
+  const shouldSeedSampleData =
+    process.env.SEED_SAMPLE_DATA === "true" || process.env.NODE_ENV !== "production";
+
+  if (!shouldSeedSampleData) {
     return;
   }
 

@@ -44,7 +44,7 @@ export function Tr({ className, ...props }: HTMLAttributes<HTMLTableRowElement>)
     <tr
       className={cn(
         /* Desktop: normal row; Mobile: card */
-        "max-md:block max-md:rounded-xl max-md:border max-md:border-outline max-md:bg-surface-bright max-md:p-4",
+        "max-md:block max-md:rounded-2xl max-md:border max-md:border-white/10 max-md:bg-white/5 max-md:p-4 transition-colors hover:bg-white/5",
         className,
       )}
       {...props}
@@ -56,7 +56,7 @@ export function Th({ className, ...props }: ThHTMLAttributes<HTMLTableCellElemen
   return (
     <th
       className={cn(
-        "border-b border-outline bg-surface-dim px-3 py-3 font-semibold text-on-surface",
+        "border-b border-white/10 bg-white/5 px-4 py-3.5 font-semibold text-on-surface-variant uppercase tracking-wider text-[11px]",
         className,
       )}
       {...props}
@@ -72,7 +72,7 @@ export function Td({
   return (
     <td
       className={cn(
-        "border-b border-outline-variant px-3 py-3 align-top",
+        "border-b border-white/5 px-4 py-3 align-middle",
         /* Mobile: stack as label + value */
         "max-md:flex max-md:min-w-0 max-md:gap-2 max-md:border-b-0 max-md:px-0 max-md:py-1.5",
         className,
@@ -80,7 +80,7 @@ export function Td({
       {...props}
     >
       {label ? (
-        <span className="hidden max-md:inline-block max-md:min-w-[7rem] max-md:shrink-0 max-md:font-semibold max-md:text-on-surface-variant">
+        <span className="hidden max-md:inline-block max-md:min-w-[7rem] max-md:shrink-0 max-md:font-semibold max-md:text-on-surface-variant max-md:text-xs max-md:uppercase max-md:tracking-wider">
           {label}
         </span>
       ) : null}

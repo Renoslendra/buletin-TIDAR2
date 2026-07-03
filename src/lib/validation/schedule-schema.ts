@@ -7,7 +7,10 @@ import type {
   SekolahSabatExtraction,
 } from "@/types/schedule";
 
-const nullableText = z.string().trim().min(1).nullable().optional();
+const nullableText = z.preprocess(
+  (value) => (typeof value === "string" && value.trim() === "" ? null : value),
+  z.string().trim().min(1).nullable().optional(),
+);
 
 const normalizedDate = z
   .string()

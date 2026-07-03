@@ -32,7 +32,8 @@ export default async function DashboardPage() {
         prisma.bulletin.findMany({ orderBy: { createdAt: "desc" }, take: 5 }),
       ]);
     data = { scheduleCount, bulletinCount, latestSchedules, latestBulletins };
-  } catch {
+  } catch (err) {
+    console.error("[Dashboard] DB error:", err);
     error = "Database belum siap. Jalankan migrasi dan seed sesuai README.";
   }
 

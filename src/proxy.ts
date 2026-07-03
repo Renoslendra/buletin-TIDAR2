@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { SESSION_COOKIE } from "@/lib/auth/session";
+import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/session";
 
 const protectedPrefixes = [
   "/dashboard",
@@ -9,25 +9,36 @@ const protectedPrefixes = [
   "/history",
 ];
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const token = request.cookies.get(SESSION_COOKIE)?.value;
+  const session = await verifySessionToken(token);
+  const hasInvalidSessionCookie = Boolean(token && !session);
   const isProtected =
     !pathname.startsWith("/bulletins/classic-preview") &&
-    !(pathname.includes("/preview") && request.nextUrl.searchParams.get("print") === "1") &&
     protectedPrefixes.some((prefix) => pathname.startsWith(prefix));
 
-  if (isProtected && !request.cookies.get(SESSION_COOKIE)) {
+  if (isProtected && !session) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set("next", pathname);
-    return NextResponse.redirect(url);
+    url.search = "";
+    url.searchParams.set("next", `${pathname}${request.nextUrl.search}`);
+    const response = NextResponse.redirect(url);
+    if (hasInvalidSessionCookie) {
+      response.cookies.delete(SESSION_COOKIE);
+    }
+    return response;
   }
 
-  if (pathname === "/login" && request.cookies.get(SESSION_COOKIE)) {
+  if (pathname === "/login" && session) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  if (hasInvalidSessionCookie) {
+    response.cookies.delete(SESSION_COOKIE);
+  }
+  return response;
 }
 
 export const config = {

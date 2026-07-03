@@ -35,7 +35,8 @@ export default async function NewBulletinPage() {
           ? schedule.sekolahSabatRows.map((row) => row.date.toISOString().slice(0, 10))
           : schedule.khotbahRows.map((row) => row.date.toISOString().slice(0, 10)),
     }));
-  } catch {
+  } catch (err) {
+    console.error("[NewBulletin] DB error:", err);
     error = "Database belum siap.";
   }
 

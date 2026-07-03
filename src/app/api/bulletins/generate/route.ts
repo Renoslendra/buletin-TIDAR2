@@ -4,6 +4,7 @@ import { requireUser } from "@/lib/auth/current-user";
 import { dateStringToDate, normalizeDateInput } from "@/lib/date/indonesian-date";
 import { prisma } from "@/lib/db/prisma";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
+import { requireSameOrigin } from "@/lib/http/request-guard";
 import { buildBulletinData, defaultBulletinSettings } from "@/lib/mapping/bulletin-mapper";
 
 const generateSchema = z.object({
@@ -12,13 +13,29 @@ const generateSchema = z.object({
   date: z.string().min(1).transform((value) => normalizeDateInput(value)),
 });
 
+async function loadSettings() {
+  const row = await prisma.appSettings.findFirst();
+  if (!row) return defaultBulletinSettings;
+
+  return {
+    churchName: row.churchName,
+    sabbathSchoolTime: row.sabbathSchoolTime,
+    sermonServiceTime: row.sermonServiceTime,
+    footerTagline: row.footerTagline,
+    activeTemplate: row.activeTemplate,
+    defaultSongs: row.defaultSongs as Record<string, string>,
+    defaultBulletinItems: row.defaultBulletinItems as Record<string, string>,
+  };
+}
+
 export async function POST(request: NextRequest) {
   try {
+    requireSameOrigin(request);
     const user = await requireUser(request);
     const body = generateSchema.parse(await request.json());
     const date = dateStringToDate(body.date);
 
-    const [schoolRow, sermonRow] = await Promise.all([
+    const [schoolRow, sermonRow, settings] = await Promise.all([
       body.schoolScheduleId
         ? prisma.scheduleRowSekolahSabat.findFirst({
             where: { scheduleUploadId: body.schoolScheduleId, date },
@@ -29,6 +46,7 @@ export async function POST(request: NextRequest) {
             where: { scheduleUploadId: body.sermonScheduleId, date },
           })
         : Promise.resolve(null),
+      loadSettings(),
     ]);
 
     if (!schoolRow && !sermonRow) {
@@ -39,14 +57,14 @@ export async function POST(request: NextRequest) {
       date: body.date,
       sekolahSabat: schoolRow,
       khotbah: sermonRow,
-      settings: defaultBulletinSettings,
+      settings,
     });
 
     const bulletin = await prisma.bulletin.create({
       data: {
         date,
         title: `Ibadah Sabat - ${bulletinData.header.date_text}`,
-        churchName: defaultBulletinSettings.churchName,
+        churchName: settings.churchName,
         schoolSabbathRowId: schoolRow?.id ?? null,
         sermonRowId: sermonRow?.id ?? null,
         bulletinData,

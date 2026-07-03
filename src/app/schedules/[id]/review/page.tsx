@@ -82,7 +82,7 @@ export default async function ReviewSchedulePage({
       ? toSchoolRows(schedule.sekolahSabatRows)
       : toSermonRows(schedule.khotbahRows);
 
-  const isImage = /\.(png|jpg|jpeg)$/i.test(schedule.originalFileUrl);
+  const isImage = /\.(png|jpg|jpeg|webp)$/i.test(schedule.originalFileUrl);
 
   return (
     <AppShell>

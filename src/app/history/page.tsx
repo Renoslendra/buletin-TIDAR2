@@ -21,7 +21,8 @@ export default async function HistoryPage() {
       orderBy: { createdAt: "desc" },
       take: 100,
     });
-  } catch {
+  } catch (err) {
+    console.error("[History] DB error:", err);
     error = "Database belum siap.";
   }
 

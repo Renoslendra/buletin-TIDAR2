@@ -4,6 +4,7 @@ import { requireUser } from "@/lib/auth/current-user";
 import { SESSION_COOKIE } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/prisma";
 import { handleRouteError, jsonError } from "@/lib/http/api-response";
+import { requireSameOrigin } from "@/lib/http/request-guard";
 import { saveExportFile } from "@/lib/storage/local-storage";
 
 export const runtime = "nodejs";
@@ -13,6 +14,7 @@ export async function POST(
   context: { params: Promise<{ id: string }> },
 ) {
   try {
+    requireSameOrigin(request);
     await requireUser(request);
     const { id } = await context.params;
     const bulletin = await prisma.bulletin.findUnique({ where: { id } });
@@ -21,7 +23,9 @@ export async function POST(
       return jsonError("Buletin tidak ditemukan.", 404);
     }
 
-    const baseUrl = process.env.APP_BASE_URL ?? "http://localhost:3000";
+    const baseUrl =
+      process.env.EXPORT_BASE_URL ?? process.env.APP_BASE_URL ?? new URL(request.url).origin;
+    const renderOrigin = new URL(baseUrl).origin;
     const session = request.cookies.get(SESSION_COOKIE)?.value;
 
     try {
@@ -29,21 +33,18 @@ export async function POST(
       const page = await browser.newPage({ viewport: { width: 1080, height: 1530 } });
 
       if (session) {
-        const url = new URL(baseUrl);
         await page.context().addCookies([
           {
             name: SESSION_COOKIE,
             value: session,
-            domain: url.hostname,
-            path: "/",
+            url: renderOrigin,
             httpOnly: true,
             sameSite: "Lax",
-            secure: url.protocol === "https:",
           },
         ]);
       }
 
-      await page.goto(`${baseUrl}/bulletins/${id}/preview?print=1`, {
+      await page.goto(`${renderOrigin}/bulletins/${id}/preview?print=1`, {
         waitUntil: "domcontentloaded",
         timeout: 15000,
       });
