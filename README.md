@@ -392,13 +392,13 @@ npm run test -- bulletin-mapper
 
 ## 📄 License
 
-<div align="center">
-
-**Private** - GMAHK Jemaat Tidar 2 Surabaya
-
-Hak cipta dilindungi undang-undang.
-
-</div>
+> **Copyright (c) 2026 GMAHK Jemaat Tidar 2 Surabaya. All rights reserved.**
+>
+> This source code and any associated documentation are the confidential and proprietary information of GMAHK Jemaat Tidar 2 Surabaya.
+>
+> You may not disclose, copy, modify, distribute, or use this code without the express written permission of the owner.
+>
+> Setiap penyalinan, modifikasi, distribusi, atau penggunaan kode ini tanpa izin tertulis dari pihak berwenang GMAHK Jemaat Tidar 2 Surabaya adalah pelanggaran hak cipta.
 
 ---
 
@@ -417,8 +417,6 @@ Hak cipta dilindungi undang-undang.
 ### ✝️ Soli Deo Gloria ✝️
 
 **GMAHK Jemaat Tidar 2 Surabaya**
-
-Jl. Tidar No. 2, Surabaya, Jawa Timur
 
 ---
 
