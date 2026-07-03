@@ -113,23 +113,13 @@ graph LR
 
 <div align="center">
 
-### 🖥️ Desktop View
+### 🖥️ Tampilan Aplikasi
 
-| Dashboard | Jadwal | Editor Buletin |
-|:---------:|:------:|:--------------:|
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Jadwal](docs/screenshots/schedules.png) | ![Editor](docs/screenshots/editor.png) |
+| Halaman Login | Dashboard Statistik | Manajemen Jadwal |
+|:-----:|:---------:|:------:|
+| ![Login](docs/screenshots/login.png) | ![Dashboard](docs/screenshots/dashboard.png) | ![Jadwal](docs/screenshots/schedules.png) |
 
-### 📱 Mobile View
-
-| Login | Dashboard | Bottom Nav |
-|:-----:|:---------:|:----------:|
-| ![Login Mobile](docs/screenshots/login-mobile.png) | ![Dashboard Mobile](docs/screenshots/dashboard-mobile.png) | ![Nav Mobile](docs/screenshots/nav-mobile.png) |
-
-### 📄 Buletin Preview
-
-| Preview A4 | Export PDF | Export PNG |
-|:----------:|:----------:|:----------:|
-| ![Preview](docs/screenshots/buletin-preview.png) | ![PDF](docs/screenshots/export-pdf.png) | ![PNG](docs/screenshots/export-png.png) |
+*(Fitur Editor Buletin, Preview, Export PDF, dan Tampilan Mobile akan ditambahkan menyusul)*
 
 </div>
 
