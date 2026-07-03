@@ -361,25 +361,7 @@ npx prisma studio        # Open Prisma Studio (GUI)
 
 ---
 
-## 🎨 Design System
 
-Warna utama aplikasi:
-
-<div align="center">
-
-| Warna | Hex | Penggunaan |
-|:-----:|:---:|:----------:|
-| 🟢 Primary | `#1B4D3E` | Header, nav, button |
-| 🟡 Accent | `#D4A853` | Highlight, CTA |
-| ⚪ Surface | `#FEFCF7` | Background |
-| 🔵 Info | `#1B6D3E` | Success state |
-| 🔴 Error | `#BA1A1A` | Error state |
-
-</div>
-
-Lihat [`DESIGN.md`](DESIGN.md) untuk panduan lengkap.
-
----
 
 ## 🧪 Testing
 
