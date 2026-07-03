@@ -28,7 +28,7 @@
 
 **Transformasi jadwal pelayanan gereja menjadi buletin ibadah sabat yang indah dalam hitungan detik.**
 
-[🚀 Quick Start](#-quick-start) · [✨ Features](#-features) · [📸 Screenshots](#-screenshots) · [🛠 Tech Stack](#-tech-stack) · [📖 Deployment](DEPLOYMENT.md)
+[🌐 Kunjungi Website Live](https://buletin-tidar2.my.id/)
 
 ---
 
