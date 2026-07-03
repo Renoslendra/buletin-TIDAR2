@@ -60,6 +60,8 @@ graph LR
 
 ## ✨ Features
 
+<div align="center">
+
 <table>
 <tr>
 <td width="50%">
@@ -106,6 +108,8 @@ graph LR
 </td>
 </tr>
 </table>
+
+</div>
 
 ---
 
