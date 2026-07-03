@@ -41,17 +41,13 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
+
+# Copy full node_modules (needed for prisma + seed scripts)
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy prisma schema, source files, and start script
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/src ./src
-COPY --from=deps /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=deps /app/node_modules/prisma ./node_modules/prisma
-COPY --from=deps /app/node_modules/tsx ./node_modules/tsx
-COPY --from=deps /app/node_modules/esbuild ./node_modules/esbuild
-COPY --from=deps /app/node_modules/dotenv ./node_modules/dotenv
-COPY --from=deps /app/node_modules/bcryptjs ./node_modules/bcryptjs
-COPY --from=deps /app/node_modules/@libsql ./node_modules/@libsql
-
-# Copy start script
 COPY start.sh ./start.sh
 RUN chmod +x start.sh
 
