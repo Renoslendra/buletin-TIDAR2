@@ -50,12 +50,13 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma.config.mjs ./prisma.config.mjs
 COPY --from=builder /app/src ./src
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY start.sh ./start.sh
 RUN chmod +x start.sh
 
-# Create storage and data directories
-RUN mkdir -p storage/uploads storage exports data \
-    && chown -R nextjs:nodejs storage data
+# Create storage, data, and cache directories with proper permissions
+RUN mkdir -p storage/uploads storage exports data .next/cache \
+    && chown -R nextjs:nodejs storage data .next/cache
 
 # Database lives in /app/data (mount a Railway volume here)
 ENV DATABASE_URL="file:/app/data/dev.db"
