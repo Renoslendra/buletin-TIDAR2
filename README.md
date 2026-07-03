@@ -111,6 +111,13 @@ graph LR
 
 ## 📸 Screenshots
 
+> **📸 Cara menambahkan screenshot:**
+> 1. Jalankan aplikasi: `npm run dev`
+> 2. Buka di browser: `http://localhost:3000`
+> 3. Ambil screenshot setiap halaman
+> 4. Simpan di folder `docs/screenshots/`
+> 5. Push ke GitHub
+
 <div align="center">
 
 ### 🖥️ Desktop View
@@ -125,7 +132,27 @@ graph LR
 |:-----:|:---------:|:----------:|
 | ![Login Mobile](docs/screenshots/login-mobile.png) | ![Dashboard Mobile](docs/screenshots/dashboard-mobile.png) | ![Nav Mobile](docs/screenshots/nav-mobile.png) |
 
+### 📄 Buletin Preview
+
+| Preview A4 | Export PDF | Export PNG |
+|:----------:|:----------:|:----------:|
+| ![Preview](docs/screenshots/buletin-preview.png) | ![PDF](docs/screenshots/export-pdf.png) | ![PNG](docs/screenshots/export-png.png) |
+
 </div>
+
+### 📋 Daftar Halaman yang Perlu Di-screenshot
+
+| Halaman | URL | Keterangan |
+|:-------:|:---:|:----------:|
+| Login | `/login` | Form login |
+| Dashboard | `/dashboard` | Statistik & menu |
+| Jadwal | `/schedules` | Daftar jadwal |
+| Upload Jadwal | `/schedules/new` | Form upload |
+| Review Jadwal | `/schedules/[id]/review` | Tabel review |
+| Buletin Baru | `/bulletins/new` | Form generate |
+| Edit Buletin | `/bulletins/[id]/edit` | Editor |
+| Preview Buletin | `/bulletins/[id]/preview` | Preview A4 |
+| Riwayat | `/history` | Daftar buletin |
 
 ---
 
