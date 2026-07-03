@@ -31,6 +31,7 @@
   display: block;
   width: 100%;
   height: auto;
+  filter: contrast(1.12) brightness(0.9);
 }
 
 .classic-church-block {
@@ -71,37 +72,37 @@
   margin: 0;
   color: #111111;
   text-align: center;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .classic-label {
   color: #111111;
-  font-weight: 400;
+  font-weight: 500;
   text-align: right;
 }
 
 .classic-colon {
   color: #111111;
-  font-weight: 400;
+  font-weight: 500;
   text-align: center;
 }
 
 .classic-value {
   min-width: 0;
-  color: #5f5f5f;
-  font-weight: 400;
+  color: #545454;
+  font-weight: 500;
   text-align: left;
   overflow-wrap: anywhere;
 }
 
 .classic-inline-label {
   color: #111111;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .classic-inline-value {
-  color: #5f5f5f;
-  font-weight: 400;
+  color: #545454;
+  font-weight: 500;
 }
 
 .classic-inline-value strong,
@@ -182,14 +183,15 @@
   position: relative;
   z-index: 2;
   max-width: 142mm;
-  margin: 0.15mm auto 1mm;
+  margin: 0.7mm auto 0.65mm;
   color: #111111;
   text-align: center;
   font-size: 17.6px;
   font-weight: 800;
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: 0;
   text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .classic-watermark {
@@ -197,7 +199,7 @@
   position: absolute;
   z-index: 1;
   object-fit: contain;
-  filter: grayscale(1) contrast(0.25) brightness(1.72);
+  filter: grayscale(1) contrast(0.38) brightness(1.52);
 }
 
 .classic-watermark-top {
@@ -205,7 +207,7 @@
   top: 16.2mm;
   width: 26mm;
   height: 26mm;
-  opacity: 0.58;
+  opacity: 0.66;
 }
 
 .classic-watermark-bottom {
@@ -213,7 +215,7 @@
   bottom: 37mm;
   width: 67mm;
   height: 67mm;
-  opacity: 0.54;
+  opacity: 0.62;
 }
 
 @media print {

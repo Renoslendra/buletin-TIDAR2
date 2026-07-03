@@ -236,6 +236,26 @@ APP_BASE_URL=http://localhost:3000
 
 ---
 
+## Railway Deployment
+
+Data aplikasi memakai SQLite dan file upload lokal. Di Railway, filesystem container akan hilang saat redeploy kecuali service memakai Volume.
+
+1. Attach Railway Volume ke service web.
+2. Gunakan mount path `/app/data`.
+3. Pastikan environment berikut tersedia:
+
+```env
+SESSION_SECRET="isi-dengan-secret-minimal-32-karakter"
+AI_PROVIDER=mimo
+MIMO_API_KEY=your-mimo-api-key
+MIMO_MODEL=mimo-v2.5
+MIMO_BASE_URL=https://api.xiaomimimo.com/v1
+```
+
+Saat Volume terpasang, Railway menyediakan `RAILWAY_VOLUME_MOUNT_PATH`. Startup app otomatis menyimpan database ke `${RAILWAY_VOLUME_MOUNT_PATH}/dev.db` dan file upload/export ke `${RAILWAY_VOLUME_MOUNT_PATH}/storage`.
+
+---
+
 ## 📁 Project Structure
 
 ```

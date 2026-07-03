@@ -36,6 +36,9 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+# Railway mounts volumes as root. This keeps SQLite and uploaded files writable
+# when a Volume is attached to the service.
+ENV RAILWAY_RUN_UID=0
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -75,7 +78,5 @@ ENV STORAGE_ROOT="/app/data/storage"
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
-
-USER nextjs
 
 CMD ["./start.sh"]

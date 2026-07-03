@@ -11,10 +11,15 @@ const SAFE_FILENAME_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".pd
 
 export function getStorageRoot() {
   const configuredRoot = process.env.STORAGE_ROOT;
+  const railwayVolumePath = process.env.RAILWAY_VOLUME_MOUNT_PATH;
 
   // If explicitly set to an absolute path, use it directly
   if (configuredRoot && path.isAbsolute(configuredRoot)) {
     return configuredRoot;
+  }
+
+  if (railwayVolumePath && path.isAbsolute(railwayVolumePath)) {
+    return path.join(railwayVolumePath, "storage");
   }
 
   // In production (Docker), use the persistent volume path
