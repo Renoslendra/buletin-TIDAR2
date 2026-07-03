@@ -5,15 +5,19 @@ const ALLOWED_SCOPES = new Set(["uploads", "exports"]);
 
 export function getStorageRoot() {
   const configuredRoot = process.env.STORAGE_ROOT;
-  if (!configuredRoot || configuredRoot === "storage") {
-    return path.join(process.cwd(), "storage");
+
+  // If explicitly set to an absolute path, use it directly
+  if (configuredRoot && path.isAbsolute(configuredRoot)) {
+    return configuredRoot;
   }
 
-  if (!path.isAbsolute(configuredRoot)) {
-    throw new Error("STORAGE_ROOT harus absolute path atau bernilai \"storage\".");
+  // In production (Docker), use the persistent volume path
+  if (process.env.NODE_ENV === "production") {
+    return "/app/data/storage";
   }
 
-  return configuredRoot;
+  // Local development: use <project>/storage
+  return path.join(process.cwd(), "storage");
 }
 
 function sanitizeFilename(filename: string) {
