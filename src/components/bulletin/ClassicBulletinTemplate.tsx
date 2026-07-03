@@ -85,7 +85,7 @@ function renderInlineValue(value: string) {
   return (
     <>
       <strong>{quotedTitleMatch[1]}</strong>
-      {quotedTitleMatch[2] ? <span>{quotedTitleMatch[2]}</span> : null}
+      {quotedTitleMatch[2] ? <strong>{quotedTitleMatch[2]}</strong> : null}
     </>
   );
 }

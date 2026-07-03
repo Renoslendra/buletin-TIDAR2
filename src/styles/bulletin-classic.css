@@ -72,37 +72,37 @@
   margin: 0;
   color: #111111;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .classic-label {
   color: #111111;
-  font-weight: 500;
+  font-weight: 600;
   text-align: right;
 }
 
 .classic-colon {
   color: #111111;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
 }
 
 .classic-value {
   min-width: 0;
-  color: #545454;
-  font-weight: 500;
+  color: #474747;
+  font-weight: 600;
   text-align: left;
   overflow-wrap: anywhere;
 }
 
 .classic-inline-label {
   color: #111111;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .classic-inline-value {
-  color: #545454;
-  font-weight: 500;
+  color: #474747;
+  font-weight: 600;
 }
 
 .classic-inline-value strong,
@@ -128,10 +128,9 @@
   position: relative;
   z-index: 2;
   height: 8.7mm;
-  margin: 1.25mm 8mm 1.05mm 15.4mm;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 1.25mm 12mm 1.05mm;
+  display: grid;
+  place-items: center;
   background: #e7e7e7;
 }
 
@@ -140,7 +139,7 @@
   color: #111111;
   font-size: 15.4px;
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.12;
   text-align: center;
 }
 
@@ -182,7 +181,9 @@
 .classic-sermon-title {
   position: relative;
   z-index: 2;
-  max-width: 142mm;
+  width: calc(100% - 30.8mm);
+  max-width: 146mm;
+  box-sizing: border-box;
   margin: 0.7mm auto 0.65mm;
   color: #111111;
   text-align: center;
