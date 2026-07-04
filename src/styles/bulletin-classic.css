@@ -119,10 +119,9 @@
 
 .classic-info-row {
   display: grid;
-  grid-template-columns: 72mm 4mm minmax(0, 1fr);
+  grid-template-columns: 80mm 4mm minmax(0, 1fr);
   align-items: baseline;
   text-align: left;
-  transform: translateX(12.8mm);
 }
 
 .classic-section-bar {
@@ -163,10 +162,9 @@
 
 .classic-program-row {
   display: grid;
-  grid-template-columns: 72mm 4mm minmax(0, 1fr);
+  grid-template-columns: 80mm 4mm minmax(0, 1fr);
   align-items: baseline;
   text-align: left;
-  transform: translateX(12.8mm);
 }
 
 .classic-program-row-inline {
