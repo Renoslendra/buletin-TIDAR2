@@ -163,7 +163,12 @@ export function BulletinProgramListClassic({
 }
 
 export function BulletinSermonTitleClassic({ sermon }: { sermon: BulletinSermonData }) {
-  return <div className="classic-sermon-title">{sermon.title || "SETIA SAMPAI AKHIR"}</div>;
+  const style = sermon.offsetX !== undefined ? { transform: `translateX(${sermon.offsetX}mm)` } : undefined;
+  return (
+    <div className="classic-sermon-title" style={style}>
+      {sermon.title || "SETIA SAMPAI AKHIR"}
+    </div>
+  );
 }
 
 export function BulletinPreviewPageClassic({ children }: { children: ReactNode }) {

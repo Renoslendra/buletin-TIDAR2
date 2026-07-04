@@ -25,6 +25,7 @@ export type BulletinSermonData = {
   title: string;
   preacher: string;
   verse: string;
+  offsetX?: number;
 };
 
 export type BulletinFooterData = {

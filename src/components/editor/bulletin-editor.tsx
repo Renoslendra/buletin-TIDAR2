@@ -415,6 +415,31 @@ export function BulletinEditor({
                 }
               />
             </label>
+            <label className="block space-y-2 pt-2 border-t border-outline">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold text-on-surface">Geser Posisi Judul (Kiri/Kanan)</span>
+                <span className="text-xs font-mono bg-surface-dim px-2 py-0.5 rounded text-on-surface">{data.sermon.offsetX ?? 0} mm</span>
+              </div>
+              <input
+                type="range"
+                min="-30"
+                max="30"
+                step="1"
+                value={data.sermon.offsetX ?? 0}
+                onChange={(event) =>
+                  setData((current) => ({
+                    ...current,
+                    sermon: { ...current.sermon, offsetX: Number(event.target.value) },
+                  }))
+                }
+                className="w-full cursor-pointer accent-primary"
+              />
+              <div className="flex justify-between text-[10px] text-on-surface-variant">
+                <span>&larr; Kiri (-30mm)</span>
+                <span>Tengah (0)</span>
+                <span>Kanan (+30mm) &rarr;</span>
+              </div>
+            </label>
           </CardContent>
         </Card>
 
