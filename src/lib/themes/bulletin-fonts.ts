@@ -51,7 +51,35 @@ export const BULLETIN_FONTS: FontConfig[] = [
     description: "Sans-serif kontemporer ramah & jernih",
     sampleText: "SabatFlow GMAHK",
   },
+  {
+    id: "times" as any,
+    name: "Times New Roman",
+    description: "Serif gerejawi tradisional formal & universal",
+    sampleText: "SabatFlow GMAHK",
+  },
+  {
+    id: "garamond" as any,
+    name: "Garamond Sacred",
+    description: "Serif sastra antik yang khidmat & agung",
+    sampleText: "SabatFlow GMAHK",
+  },
+  {
+    id: "cambria" as any,
+    name: "Cambria Classic",
+    description: "Serif akademis elegan berwibawa & tajam",
+    sampleText: "SabatFlow GMAHK",
+  },
+  {
+    id: "verdana" as any,
+    name: "Verdana Clean",
+    description: "Sans-serif ekstra lebar super jernih",
+    sampleText: "SabatFlow GMAHK",
+  },
 ];
+
+export function getFontConfig(font?: BulletinFontFamily): FontConfig {
+  return BULLETIN_FONTS.find((f) => f.id === font) ?? BULLETIN_FONTS[0];
+}
 
 export const BULLETIN_FONT_SIZES: FontSizeConfig[] = [
   {

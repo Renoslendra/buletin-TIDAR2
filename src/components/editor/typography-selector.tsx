@@ -1,8 +1,9 @@
 "use client";
 
-import { Check, Type, ZoomIn } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Check, ChevronDown, Type, ZoomIn } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { BULLETIN_FONTS } from "@/lib/themes/bulletin-fonts";
+import { BULLETIN_FONTS, getFontConfig } from "@/lib/themes/bulletin-fonts";
 import type { BulletinFontFamily, BulletinFontSize } from "@/types/bulletin";
 
 type TypographySelectorProps = {
@@ -18,6 +19,21 @@ export function TypographySelector({
   onFontChange,
   onSizeChange,
 }: TypographySelectorProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const selectedFont = getFontConfig(fontFamily);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   let currentPercent = 100;
   if (typeof fontSize === "number") {
     currentPercent = fontSize;
@@ -29,48 +45,86 @@ export function TypographySelector({
 
   return (
     <div className="space-y-6">
-      {/* Font Family Selector */}
-      <div className="space-y-2.5">
+      {/* Font Family Selector Dropdown */}
+      <div className="space-y-2 relative" ref={dropdownRef}>
         <div className="flex items-center gap-2">
           <Type className="h-4 w-4 text-primary-light" />
           <h3 className="font-bold text-on-surface">Pilihan Jenis Font</h3>
         </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {BULLETIN_FONTS.map((font) => {
-            const isActive = fontFamily === font.id;
-            return (
-              <button
-                key={font.id}
-                type="button"
-                onClick={() => onFontChange(font.id)}
-                className={cn(
-                  "group relative flex flex-col justify-between rounded-xl border-2 p-3 text-left transition-all duration-200",
-                  isActive
-                    ? "border-primary bg-primary/5 shadow-sm"
-                    : "border-border/60 bg-surface hover:border-primary/40 hover:bg-surface-hover"
-                )}
-              >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-on-surface">{font.name}</span>
+
+        {/* Trigger Button */}
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full flex items-center justify-between gap-3 rounded-xl border-2 border-outline bg-surface-dim px-4 py-3 text-left hover:border-primary/60 hover:bg-surface-bright transition-all shadow-sm group"
+        >
+          <div className="flex items-center justify-between gap-3 min-w-0 flex-1">
+            <div className="min-w-0 flex-1">
+              <span className="font-bold text-sm text-on-surface">
+                {selectedFont.name}
+              </span>
+              <p className="text-xs text-on-surface-variant truncate">
+                {selectedFont.description}
+              </p>
+            </div>
+            <div className="rounded border border-border/40 bg-white px-2.5 py-1 text-xs font-semibold text-gray-800 shadow-inner shrink-0">
+              {selectedFont.sampleText}
+            </div>
+          </div>
+
+          <ChevronDown
+            className={cn(
+              "h-5 w-5 text-on-surface-variant transition-transform duration-200 shrink-0",
+              isOpen && "rotate-180 text-primary-light",
+            )}
+          />
+        </button>
+
+        {/* Dropdown Menu */}
+        {isOpen && (
+          <div className="absolute z-50 mt-1 w-full max-h-80 overflow-y-auto rounded-2xl border-2 border-border bg-[#141418] p-2 shadow-2xl backdrop-blur-xl space-y-1">
+            {BULLETIN_FONTS.map((font) => {
+              const isActive = fontFamily === font.id;
+              return (
+                <button
+                  key={font.id}
+                  type="button"
+                  onClick={() => {
+                    onFontChange(font.id);
+                    setIsOpen(false);
+                  }}
+                  className={cn(
+                    "w-full flex items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-left transition-all",
+                    isActive
+                      ? "bg-primary/20 border border-primary/50 text-on-surface"
+                      : "hover:bg-surface-bright text-on-surface-variant hover:text-on-surface",
+                  )}
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="font-bold text-xs text-on-surface">
+                      {font.name}
+                    </div>
+                    <p className="text-[11px] text-on-surface-variant/80 truncate">
+                      {font.description}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 shrink-0">
+                    <div className="rounded border border-border/40 bg-white px-2 py-0.5 text-[11px] font-semibold text-gray-800 shadow-inner">
+                      {font.sampleText}
+                    </div>
                     {isActive && (
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white">
-                        <Check className="h-3 w-3 stroke-[3]" />
-                      </span>
+                      <Check className="h-4 w-4 text-primary-light shrink-0" />
                     )}
                   </div>
-                  <p className="mt-1 text-xs text-on-surface-muted">{font.description}</p>
-                </div>
-                <div className="mt-2.5 rounded border border-border/40 bg-white px-2 py-1 text-xs font-semibold text-gray-800 shadow-inner">
-                  {font.sampleText}
-                </div>
-              </button>
-            );
-          })}
-        </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
-      {/* Continuous Font Size Manual Slider (Just like Geser Posisi Judul) */}
+      {/* Continuous Font Size Manual Slider */}
       <div className="space-y-3 rounded-2xl border border-border/60 bg-surface/50 p-4 shadow-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

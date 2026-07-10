@@ -73,6 +73,46 @@ export const BULLETIN_THEMES: ThemeConfig[] = [
       accent: "#574137",
     },
   },
+  {
+    id: "royal_gold" as any,
+    name: "Royal Gold",
+    description: "Emas mewah & aksen gelap bergaya keagungan sakral",
+    previewColors: {
+      primary: "#4a3b18",
+      secondary: "#e3d8c1",
+      accent: "#6b5523",
+    },
+  },
+  {
+    id: "sunset_bronze" as any,
+    name: "Sunset Bronze",
+    description: "Perpaduan tembaga hangat & keanggunan senja berwibawa",
+    previewColors: {
+      primary: "#5e3023",
+      secondary: "#e6cfc8",
+      accent: "#894d3a",
+    },
+  },
+  {
+    id: "ocean_teal" as any,
+    name: "Ocean Teal",
+    description: "Biru samudra segar, sejuk & kontemporer elegan",
+    previewColors: {
+      primary: "#1a4a4f",
+      secondary: "#c3e2e5",
+      accent: "#2c6f77",
+    },
+  },
+  {
+    id: "warm_olive" as any,
+    name: "Warm Olive",
+    description: "Hijau zaitun hangat eksklusif & teduh menenangkan",
+    previewColors: {
+      primary: "#3e4229",
+      secondary: "#dcdfd1",
+      accent: "#5d633e",
+    },
+  },
 ];
 
 export function getThemeConfig(theme?: BulletinTheme): ThemeConfig {

@@ -1,8 +1,9 @@
 "use client";
 
-import { Check, Palette } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Check, ChevronDown, Palette } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { BULLETIN_THEMES } from "@/lib/themes/bulletin-themes";
+import { BULLETIN_THEMES, getThemeConfig } from "@/lib/themes/bulletin-themes";
 import type { BulletinTheme } from "@/types/bulletin";
 
 export function ThemeSelector({
@@ -12,108 +13,126 @@ export function ThemeSelector({
   value: BulletinTheme;
   onChange: (theme: BulletinTheme) => void;
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const selectedTheme = getThemeConfig(value);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 relative" ref={dropdownRef}>
       <div className="flex items-center gap-2">
         <Palette className="h-4 w-4 text-primary-light" />
         <h2 className="font-bold text-on-surface">Tema Buletin</h2>
       </div>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-        {BULLETIN_THEMES.map((theme) => {
-          const isActive = value === theme.id;
-          return (
-            <button
-              key={theme.id}
-              type="button"
-              onClick={() => onChange(theme.id)}
-              className={cn(
-                "group relative flex flex-col gap-2 rounded-xl border-2 p-3 text-left transition-all duration-200",
-                isActive
-                  ? "border-primary bg-primary/10 shadow-md shadow-primary/20"
-                  : "border-outline bg-surface-dim hover:border-outline-variant hover:bg-surface-bright",
-              )}
-            >
-              {/* Color preview bars */}
-              <div className="flex gap-1.5">
-                <div
-                  className="h-8 flex-1 rounded-md shadow-sm"
-                  style={{ background: theme.previewColors.primary }}
-                />
-                <div
-                  className="h-8 flex-1 rounded-md shadow-sm"
-                  style={{ background: theme.previewColors.secondary }}
-                />
-                <div
-                  className="h-8 w-5 rounded-md shadow-sm"
-                  style={{ background: theme.previewColors.accent }}
-                />
-              </div>
 
-              {/* Mini layout preview */}
-              <div className="flex flex-col gap-0.5 rounded-md border border-outline/50 bg-white p-1.5">
-                {/* Mini header line */}
-                <div className="flex items-center gap-1">
-                  <div className="h-1.5 w-5 rounded-sm bg-gray-300" />
-                  <div
-                    className="h-1.5 flex-1 rounded-sm"
-                    style={{ background: theme.previewColors.primary }}
-                  />
-                </div>
-                {/* Mini section bar */}
-                <div
-                  className="mt-0.5 h-2 w-full rounded-sm"
-                  style={{ background: theme.previewColors.primary === "#111111" ? "#e7e7e7" : theme.previewColors.primary }}
-                />
-                {/* Mini rows */}
-                <div className="flex items-center gap-1">
-                  <div
-                    className="h-1 w-8 rounded-sm"
-                    style={{ background: theme.previewColors.primary, opacity: 0.5 }}
-                  />
-                  <div className="h-1 w-0.5 rounded-full bg-gray-300" />
-                  <div
-                    className="h-1 flex-1 rounded-sm"
-                    style={{ background: theme.previewColors.accent, opacity: 0.4 }}
-                  />
-                </div>
-                <div className="flex items-center gap-1">
-                  <div
-                    className="h-1 w-6 rounded-sm"
-                    style={{ background: theme.previewColors.primary, opacity: 0.5 }}
-                  />
-                  <div className="h-1 w-0.5 rounded-full bg-gray-300" />
-                  <div
-                    className="h-1 flex-1 rounded-sm"
-                    style={{ background: theme.previewColors.accent, opacity: 0.4 }}
-                  />
-                </div>
-              </div>
+      {/* Trigger Button */}
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between gap-3 rounded-xl border-2 border-outline bg-surface-dim px-4 py-3 text-left hover:border-primary/60 hover:bg-surface-bright transition-all shadow-sm group"
+      >
+        <div className="flex items-center gap-3 min-w-0 flex-1">
+          {/* Color Preview Badge */}
+          <div className="flex gap-1 shrink-0 rounded-md p-1 bg-white/10 border border-white/15">
+            <div
+              className="h-5 w-4 rounded-sm"
+              style={{ background: selectedTheme.previewColors.primary }}
+            />
+            <div
+              className="h-5 w-4 rounded-sm"
+              style={{ background: selectedTheme.previewColors.secondary }}
+            />
+            <div
+              className="h-5 w-3 rounded-sm"
+              style={{ background: selectedTheme.previewColors.accent }}
+            />
+          </div>
 
-              {/* Theme name */}
-              <div>
-                <span
-                  className={cn(
-                    "text-xs font-bold uppercase tracking-wider",
-                    isActive ? "text-primary-light" : "text-on-surface-variant",
-                  )}
-                >
-                  {theme.name}
-                </span>
-                <p className="mt-0.5 text-[10px] leading-tight text-on-surface-variant">
-                  {theme.description}
-                </p>
-              </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-sm text-on-surface uppercase tracking-wider">
+                {selectedTheme.name}
+              </span>
+            </div>
+            <p className="text-xs text-on-surface-variant truncate">
+              {selectedTheme.description}
+            </p>
+          </div>
+        </div>
 
-              {/* Active checkmark */}
-              {isActive && (
-                <div className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary shadow-md">
-                  <Check className="h-3 w-3 text-white" strokeWidth={3} />
+        <ChevronDown
+          className={cn(
+            "h-5 w-5 text-on-surface-variant transition-transform duration-200 shrink-0",
+            isOpen && "rotate-180 text-primary-light",
+          )}
+        />
+      </button>
+
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div className="absolute z-50 mt-1 w-full max-h-80 overflow-y-auto rounded-2xl border-2 border-border bg-[#141418] p-2 shadow-2xl backdrop-blur-xl space-y-1">
+          {BULLETIN_THEMES.map((theme) => {
+            const isActive = value === theme.id;
+            return (
+              <button
+                key={theme.id}
+                type="button"
+                onClick={() => {
+                  onChange(theme.id);
+                  setIsOpen(false);
+                }}
+                className={cn(
+                  "w-full flex items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-left transition-all",
+                  isActive
+                    ? "bg-primary/20 border border-primary/50 text-on-surface"
+                    : "hover:bg-surface-bright text-on-surface-variant hover:text-on-surface",
+                )}
+              >
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  {/* Color preview bars */}
+                  <div className="flex gap-1 shrink-0 rounded-md p-0.5 bg-white/5 border border-white/10">
+                    <div
+                      className="h-5 w-4 rounded-sm"
+                      style={{ background: theme.previewColors.primary }}
+                    />
+                    <div
+                      className="h-5 w-4 rounded-sm"
+                      style={{ background: theme.previewColors.secondary }}
+                    />
+                    <div
+                      className="h-5 w-3 rounded-sm"
+                      style={{ background: theme.previewColors.accent }}
+                    />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="font-bold text-xs uppercase tracking-wider text-on-surface">
+                      {theme.name}
+                    </div>
+                    <p className="text-[11px] text-on-surface-variant/80 truncate">
+                      {theme.description}
+                    </p>
+                  </div>
                 </div>
-              )}
-            </button>
-          );
-        })}
-      </div>
+
+                {isActive && (
+                  <Check className="h-4 w-4 text-primary-light shrink-0" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

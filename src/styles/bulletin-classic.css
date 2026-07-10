@@ -347,6 +347,66 @@
 }
 
 /* ========================================
+   THEME: Royal Gold
+   ======================================== */
+.theme-royal-gold {
+  --bulletin-label-color: #4a3b18;
+  --bulletin-value-color: #6b5523;
+  --bulletin-section-bg: #4a3b18;
+  --bulletin-section-text: #ffffff;
+  --bulletin-sermon-color: #4a3b18;
+  --bulletin-colon-color: #4a3b18;
+  --bulletin-strong-color: #4a3b18;
+  --bulletin-accent-line: linear-gradient(90deg, transparent, #4a3b18, transparent);
+  --bulletin-watermark-filter: grayscale(0.6) contrast(0.3) brightness(1.4) sepia(0.5);
+}
+
+/* ========================================
+   THEME: Sunset Bronze
+   ======================================== */
+.theme-sunset-bronze {
+  --bulletin-label-color: #5e3023;
+  --bulletin-value-color: #894d3a;
+  --bulletin-section-bg: #5e3023;
+  --bulletin-section-text: #ffffff;
+  --bulletin-sermon-color: #5e3023;
+  --bulletin-colon-color: #5e3023;
+  --bulletin-strong-color: #5e3023;
+  --bulletin-accent-line: linear-gradient(90deg, transparent, #5e3023, transparent);
+  --bulletin-watermark-filter: grayscale(0.6) contrast(0.3) brightness(1.4) sepia(0.4) hue-rotate(345deg);
+}
+
+/* ========================================
+   THEME: Ocean Teal
+   ======================================== */
+.theme-ocean-teal {
+  --bulletin-label-color: #1a4a4f;
+  --bulletin-value-color: #2c6f77;
+  --bulletin-section-bg: #1a4a4f;
+  --bulletin-section-text: #ffffff;
+  --bulletin-sermon-color: #1a4a4f;
+  --bulletin-colon-color: #1a4a4f;
+  --bulletin-strong-color: #1a4a4f;
+  --bulletin-accent-line: linear-gradient(90deg, transparent, #1a4a4f, transparent);
+  --bulletin-watermark-filter: grayscale(0.6) contrast(0.3) brightness(1.4) sepia(0.3) hue-rotate(150deg);
+}
+
+/* ========================================
+   THEME: Warm Olive
+   ======================================== */
+.theme-warm-olive {
+  --bulletin-label-color: #3e4229;
+  --bulletin-value-color: #5d633e;
+  --bulletin-section-bg: #3e4229;
+  --bulletin-section-text: #ffffff;
+  --bulletin-sermon-color: #3e4229;
+  --bulletin-colon-color: #3e4229;
+  --bulletin-strong-color: #3e4229;
+  --bulletin-accent-line: linear-gradient(90deg, transparent, #3e4229, transparent);
+  --bulletin-watermark-filter: grayscale(0.6) contrast(0.3) brightness(1.4) sepia(0.4) hue-rotate(60deg);
+}
+
+/* ========================================
    FONT FAMILIES
    ======================================== */
 .font-inter {
@@ -367,6 +427,22 @@
 
 .font-segoe {
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.font-times {
+  font-family: "Times New Roman", Times, serif !important;
+}
+
+.font-garamond {
+  font-family: Garamond, "EB Garamond", Georgia, serif !important;
+}
+
+.font-cambria {
+  font-family: Cambria, Georgia, serif !important;
+}
+
+.font-verdana {
+  font-family: Verdana, Geneva, Tahoma, sans-serif !important;
 }
 
 /* ========================================
