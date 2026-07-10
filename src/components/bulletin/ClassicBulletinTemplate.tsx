@@ -214,13 +214,15 @@ export function BulletinTemplateClassic({ data }: { data: BulletinData }) {
     <BulletinPreviewPageClassic data={data}>
       <BulletinWatermarkClassic />
       <BulletinHeaderClassic header={data.header} />
-      <BulletinTopInfoClassic items={data.top_info} />
-      <BulletinSectionBarClassic title="Ibadah Sekolah Sabat (09.00 WIB - 10.15 WIB)" />
-      <BulletinProgramListClassic items={data.sekolah_sabat_items} />
-      <BulletinSectionBarClassic title="Ibadah Khotbah (10.20 WIB - 12.00 WIB)" />
-      <BulletinProgramListClassic items={khotbahRows} compact />
-      <BulletinSermonTitleClassic sermon={data.sermon} />
-      <BulletinProgramListClassic items={data.closing_items} compact />
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+        <BulletinTopInfoClassic items={data.top_info} />
+        <BulletinSectionBarClassic title="Ibadah Sekolah Sabat (09.00 WIB - 10.15 WIB)" />
+        <BulletinProgramListClassic items={data.sekolah_sabat_items} />
+        <BulletinSectionBarClassic title="Ibadah Khotbah (10.20 WIB - 12.00 WIB)" />
+        <BulletinProgramListClassic items={khotbahRows} compact />
+        <BulletinSermonTitleClassic sermon={data.sermon} />
+        <BulletinProgramListClassic items={data.closing_items} compact />
+      </div>
     </BulletinPreviewPageClassic>
   );
 }
