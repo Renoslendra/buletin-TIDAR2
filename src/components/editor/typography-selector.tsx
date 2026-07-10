@@ -24,7 +24,7 @@ export function TypographySelector({
       <div className="space-y-2.5">
         <div className="flex items-center gap-2">
           <Type className="h-4 w-4 text-primary-light" />
-          <h3 className="font-bold text-on-surface">Pilihan Jenis Font (Mas Stefanus Request)</h3>
+          <h3 className="font-bold text-on-surface">Pilihan Jenis Font</h3>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {BULLETIN_FONTS.map((font) => {
