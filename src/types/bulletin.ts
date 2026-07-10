@@ -33,8 +33,7 @@ export type BulletinTheme =
   | "elegant_navy"
   | "nature_green"
   | "majestic_maroon"
-  | "charcoal_slate"
-  | "royal_purple";
+  | "charcoal_slate";
 
 export type BulletinFooterData = {
   tagline: string;
