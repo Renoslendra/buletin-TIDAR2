@@ -22,11 +22,11 @@ export function BulletinPreviewFrame({
   return (
     <div
       className={cn(
-        "bulletin-preview-fit max-w-full overflow-auto rounded-xl border border-outline bg-surface-dim p-2 sm:p-4",
+        "bulletin-preview-fit max-w-full overflow-auto rounded-xl border border-outline bg-surface-dim p-2 sm:p-4 flex justify-center items-center",
         className,
       )}
     >
-      <div className="bulletin-preview-viewport mx-auto overflow-hidden">
+      <div className="bulletin-preview-viewport overflow-hidden shadow-2xl">
         <div className="bulletin-preview-page">
           <BulletinTemplate data={data} />
         </div>
