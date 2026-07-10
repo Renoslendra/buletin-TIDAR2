@@ -39,8 +39,10 @@ export type BulletinTheme =
 export type BulletinFontFamily =
   | "poppins"
   | "inter"
-  | "cormorant"
-  | "century_gothic";
+  | "georgia"
+  | "trebuchet"
+  | "palatino"
+  | "segoe";
 
 export type BulletinFontSize = "normal" | "large" | "xlarge";
 
@@ -49,7 +51,7 @@ export type BulletinFooterData = {
   template: string;
   theme?: BulletinTheme;
   fontFamily?: BulletinFontFamily;
-  fontSize?: BulletinFontSize;
+  fontSize?: BulletinFontSize | number;
 };
 
 export type BulletinSourceTrace = {

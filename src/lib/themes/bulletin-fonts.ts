@@ -28,15 +28,27 @@ export const BULLETIN_FONTS: FontConfig[] = [
     sampleText: "SabatFlow GMAHK",
   },
   {
-    id: "cormorant",
-    name: "Cormorant Serif",
-    description: "Anggun & khidmat bergaya liturgi",
+    id: "georgia",
+    name: "Georgia Serif",
+    description: "Serif klasik formal yang tegas & jelas",
     sampleText: "SabatFlow GMAHK",
   },
   {
-    id: "century_gothic",
-    name: "Century Gothic",
-    description: "Klasik modern berkarakter bulat",
+    id: "trebuchet",
+    name: "Trebuchet Humanist",
+    description: "Sans-serif hangat yang sangat nyaman dibaca",
+    sampleText: "SabatFlow GMAHK",
+  },
+  {
+    id: "palatino",
+    name: "Palatino Serif",
+    description: "Serif sakral agung yang elegan & berwibawa",
+    sampleText: "SabatFlow GMAHK",
+  },
+  {
+    id: "segoe",
+    name: "Segoe Modern",
+    description: "Sans-serif kontemporer ramah & jernih",
     sampleText: "SabatFlow GMAHK",
   },
 ];
@@ -52,13 +64,13 @@ export const BULLETIN_FONT_SIZES: FontSizeConfig[] = [
     id: "large",
     name: "Lebih Besar",
     description: "Teks lebih jelas & nyaman dibaca",
-    scaleLabel: "+6%",
+    scaleLabel: "+10%",
   },
   {
     id: "xlarge",
     name: "Ekstra Besar",
     description: "Maksimal jelas untuk lansia & jemaat",
-    scaleLabel: "+12%",
+    scaleLabel: "+18%",
   },
 ];
 

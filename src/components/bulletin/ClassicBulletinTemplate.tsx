@@ -176,11 +176,23 @@ export function BulletinSermonTitleClassic({ sermon }: { sermon: BulletinSermonD
 export function BulletinPreviewPageClassic({ children, data }: { children: ReactNode; data?: BulletinData }) {
   const themeClass = getThemeCssClass(data?.footer?.theme);
   const fontClass = getFontCssClass(data?.footer?.fontFamily);
-  const sizeClass = getSizeCssClass(data?.footer?.fontSize);
+  const rawSize = data?.footer?.fontSize;
+  const sizeClass = typeof rawSize === "string" ? getSizeCssClass(rawSize) : "";
+
+  let fontScale = 1;
+  if (typeof rawSize === "number") {
+    fontScale = rawSize / 100;
+  } else if (rawSize === "large") {
+    fontScale = 1.15;
+  } else if (rawSize === "xlarge") {
+    fontScale = 1.3;
+  }
+
   return (
     <article
       id="bulletin-page"
       className={cn("classic-bulletin-container shadow-sm print:shadow-none", themeClass, fontClass, sizeClass)}
+      style={{ "--font-scale": fontScale } as React.CSSProperties}
     >
       {children}
     </article>

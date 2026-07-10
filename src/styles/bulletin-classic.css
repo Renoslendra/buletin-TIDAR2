@@ -61,10 +61,12 @@
 .classic-church-block {
   position: absolute;
   left: 100.5mm;
+  right: 12mm;
   top: 5.7mm;
   color: var(--bulletin-label-color);
   text-align: left;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .classic-church-name {
@@ -347,59 +349,128 @@
   font-family: var(--font-inter), Arial, Helvetica, sans-serif !important;
 }
 
-.font-cormorant {
-  font-family: var(--font-cormorant), Georgia, "Times New Roman", serif !important;
+.font-georgia {
+  font-family: Georgia, "Times New Roman", serif !important;
 }
 
-.font-century-gothic {
-  font-family: "Century Gothic", Arial, Helvetica, sans-serif !important;
+.font-trebuchet {
+  font-family: "Trebuchet MS", "Lucida Grande", Tahoma, sans-serif !important;
+}
+
+.font-palatino {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif !important;
+}
+
+.font-segoe {
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
 
 /* ========================================
-   FONT SIZES (SCALING)
+   GEORGIA SERIF WIDTH TUNING
+   ======================================== */
+.font-georgia .classic-church-name {
+  font-size: 22.8px !important;
+  letter-spacing: 0px !important;
+}
+
+/* ========================================
+   FONT SIZES (SCALING TEXT ONLY — FULL A4 HEIGHT)
    ======================================== */
 .size-large .classic-church-name {
   font-size: 25.8px !important;
+  letter-spacing: 0.1px !important;
+}
+.size-large.font-georgia .classic-church-name {
+  font-size: 24.2px !important;
+  letter-spacing: -0.2px !important;
 }
 .size-large .classic-date {
-  font-size: 18.4px !important;
+  font-size: 19.2px !important;
 }
 .size-large .classic-top-line {
-  font-size: 17px !important;
+  font-size: 17.4px !important;
 }
 .size-large .classic-section-bar h2 {
-  font-size: 16.5px !important;
+  font-size: 17.2px !important;
 }
 .size-large .classic-program-line,
 .size-large .classic-program-line-compact {
-  font-size: 16.8px !important;
+  font-size: 17.2px !important;
 }
 .size-large .classic-program-list-compact .classic-line {
-  font-size: 16.2px !important;
+  font-size: 16.7px !important;
 }
 .size-large .classic-sermon-title {
-  font-size: 18.8px !important;
+  font-size: 19.4px !important;
 }
 
 .size-xlarge .classic-church-name {
-  font-size: 27.4px !important;
+  font-size: 26.8px !important;
+  letter-spacing: -0.2px !important;
+}
+.size-xlarge.font-georgia .classic-church-name {
+  font-size: 24.8px !important;
+  letter-spacing: -0.4px !important;
 }
 .size-xlarge .classic-date {
-  font-size: 19.6px !important;
+  font-size: 20.4px !important;
 }
 .size-xlarge .classic-top-line {
-  font-size: 18px !important;
+  font-size: 18.6px !important;
 }
 .size-xlarge .classic-section-bar h2 {
-  font-size: 17.5px !important;
+  font-size: 18.4px !important;
 }
 .size-xlarge .classic-program-line,
 .size-xlarge .classic-program-line-compact {
-  font-size: 17.8px !important;
+  font-size: 18.5px !important;
+  font-weight: 700 !important;
 }
 .size-xlarge .classic-program-list-compact .classic-line {
-  font-size: 17.2px !important;
+  font-size: 17.8px !important;
+  font-weight: 700 !important;
 }
 .size-xlarge .classic-sermon-title {
-  font-size: 20px !important;
+  font-size: 20.6px !important;
+}
+
+/* ========================================
+   CONTINUOUS PERCENTAGE FONT SCALING (--font-scale)
+   ======================================== */
+.classic-bulletin-container {
+  --font-scale: 1;
+}
+
+/* Header stays fixed at crisp standard size so it NEVER cuts off or overflows */
+.classic-church-name {
+  font-size: 24.2px !important;
+  letter-spacing: 0.4px !important;
+  white-space: nowrap !important;
+}
+.font-georgia .classic-church-name {
+  font-size: 22.8px !important;
+  letter-spacing: 0px !important;
+  white-space: nowrap !important;
+}
+.classic-date {
+  font-size: 17.6px !important;
+  white-space: nowrap !important;
+}
+
+/* Body content (Top info, Section bars, Program list, Sermon title) scales up to MAKSIMAL BESAR */
+.classic-top-line {
+  font-size: calc(16.3px * var(--font-scale, 1)) !important;
+}
+.classic-section-bar h2 {
+  font-size: calc(15.5px * var(--font-scale, 1)) !important;
+}
+.classic-program-line,
+.classic-program-line-compact {
+  font-size: calc(15.7px * var(--font-scale, 1)) !important;
+}
+.classic-program-list-compact .classic-line {
+  font-size: calc(15.2px * var(--font-scale, 1)) !important;
+}
+.classic-sermon-title {
+  font-size: calc(17.5px * var(--font-scale, 1)) !important;
 }
