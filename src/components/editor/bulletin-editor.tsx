@@ -248,7 +248,7 @@ export function BulletinEditor({
           <BulletinPreviewFrame data={data} />
         </section>
         <ValidationWarnings warnings={warnings} />
-        <Card>
+        <Card className="relative z-30">
           <CardContent>
             <ThemeSelector
               value={(data.footer?.theme as BulletinTheme) || "classic"}
@@ -261,7 +261,7 @@ export function BulletinEditor({
             />
           </CardContent>
         </Card>
-        <Card>
+        <Card className="relative z-20">
           <CardContent>
             <TypographySelector
               fontFamily={(data.footer?.fontFamily as BulletinFontFamily) || "poppins"}
@@ -281,7 +281,7 @@ export function BulletinEditor({
             />
           </CardContent>
         </Card>
-        <Card>
+        <Card className="relative z-10">
           <CardContent className="space-y-4">
             <div className="grid gap-3 md:grid-cols-2">
               <label className="space-y-2">

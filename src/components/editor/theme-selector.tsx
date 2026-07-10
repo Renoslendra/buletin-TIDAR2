@@ -29,7 +29,7 @@ export function ThemeSelector({
   }, []);
 
   return (
-    <div className="space-y-2 relative" ref={dropdownRef}>
+    <div className={cn("space-y-2 relative", isOpen ? "z-50" : "z-20")} ref={dropdownRef}>
       <div className="flex items-center gap-2">
         <Palette className="h-4 w-4 text-primary-light" />
         <h2 className="font-bold text-on-surface">Tema Buletin</h2>
@@ -80,7 +80,7 @@ export function ThemeSelector({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute z-50 mt-1 w-full max-h-80 overflow-y-auto rounded-2xl border-2 border-border bg-[#141418] p-2 shadow-2xl backdrop-blur-xl space-y-1">
+        <div className="absolute left-0 right-0 z-50 mt-1.5 max-h-72 overflow-y-auto rounded-2xl border-2 border-primary/40 bg-[#121218] p-2 shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-1">
           {BULLETIN_THEMES.map((theme) => {
             const isActive = value === theme.id;
             return (

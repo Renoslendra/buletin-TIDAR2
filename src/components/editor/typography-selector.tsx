@@ -46,7 +46,7 @@ export function TypographySelector({
   return (
     <div className="space-y-6">
       {/* Font Family Selector Dropdown */}
-      <div className="space-y-2 relative" ref={dropdownRef}>
+      <div className={cn("space-y-2 relative", isOpen ? "z-40" : "z-10")} ref={dropdownRef}>
         <div className="flex items-center gap-2">
           <Type className="h-4 w-4 text-primary-light" />
           <h3 className="font-bold text-on-surface">Pilihan Jenis Font</h3>
@@ -82,7 +82,7 @@ export function TypographySelector({
 
         {/* Dropdown Menu */}
         {isOpen && (
-          <div className="absolute z-50 mt-1 w-full max-h-80 overflow-y-auto rounded-2xl border-2 border-border bg-[#141418] p-2 shadow-2xl backdrop-blur-xl space-y-1">
+          <div className="absolute left-0 right-0 z-40 mt-1.5 max-h-72 overflow-y-auto rounded-2xl border-2 border-primary/40 bg-[#121218] p-2 shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-1">
             {BULLETIN_FONTS.map((font) => {
               const isActive = fontFamily === font.id;
               return (
