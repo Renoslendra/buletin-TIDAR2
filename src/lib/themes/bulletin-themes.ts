@@ -63,6 +63,16 @@ export const BULLETIN_THEMES: ThemeConfig[] = [
       accent: "#4a5568",
     },
   },
+  {
+    id: "deep_espresso",
+    name: "Deep Espresso",
+    description: "Cokelat kopi tua klasik bergaya perkamen formal",
+    previewColors: {
+      primary: "#3b2b24",
+      secondary: "#d6c7be",
+      accent: "#574137",
+    },
+  },
 ];
 
 export function getThemeConfig(theme?: BulletinTheme): ThemeConfig {

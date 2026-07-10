@@ -324,3 +324,18 @@
   --bulletin-accent-line: linear-gradient(90deg, transparent, #2d3748, transparent);
   --bulletin-watermark-filter: grayscale(0.8) contrast(0.3) brightness(1.3);
 }
+
+/* ========================================
+   THEME: Deep Espresso
+   ======================================== */
+.theme-deep-espresso {
+  --bulletin-label-color: #3b2b24;
+  --bulletin-value-color: #574137;
+  --bulletin-section-bg: #3b2b24;
+  --bulletin-section-text: #ffffff;
+  --bulletin-sermon-color: #3b2b24;
+  --bulletin-colon-color: #3b2b24;
+  --bulletin-strong-color: #3b2b24;
+  --bulletin-accent-line: linear-gradient(90deg, transparent, #3b2b24, transparent);
+  --bulletin-watermark-filter: grayscale(0.7) contrast(0.3) brightness(1.4) sepia(0.4);
+}
