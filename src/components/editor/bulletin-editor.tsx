@@ -19,7 +19,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { PLACEHOLDER } from "@/lib/mapping/bulletin-mapper";
-import type { BulletinData, ProgramItem } from "@/types/bulletin";
+import type { BulletinData, BulletinTheme, ProgramItem } from "@/types/bulletin";
+import { ThemeSelector } from "@/components/editor/theme-selector";
 
 function cloneData(data: BulletinData): BulletinData {
   return JSON.parse(JSON.stringify(data)) as BulletinData;
@@ -246,6 +247,19 @@ export function BulletinEditor({
           <BulletinPreviewFrame data={data} />
         </section>
         <ValidationWarnings warnings={warnings} />
+        <Card>
+          <CardContent>
+            <ThemeSelector
+              value={(data.footer?.theme as BulletinTheme) || "classic"}
+              onChange={(theme) =>
+                setData((current) => ({
+                  ...current,
+                  footer: { ...current.footer, theme },
+                }))
+              }
+            />
+          </CardContent>
+        </Card>
         <Card>
           <CardContent className="space-y-4">
             <div className="grid gap-3 md:grid-cols-2">

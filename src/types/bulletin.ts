@@ -28,9 +28,16 @@ export type BulletinSermonData = {
   offsetX?: number;
 };
 
+export type BulletinTheme =
+  | "classic"
+  | "elegant_navy"
+  | "nature_green"
+  | "royal_purple";
+
 export type BulletinFooterData = {
   tagline: string;
   template: string;
+  theme?: BulletinTheme;
 };
 
 export type BulletinSourceTrace = {

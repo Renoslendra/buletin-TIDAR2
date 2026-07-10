@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { getThemeCssClass } from "@/lib/themes/bulletin-themes";
 import type {
   BulletinData,
   BulletinHeaderData,
@@ -171,9 +172,10 @@ export function BulletinSermonTitleClassic({ sermon }: { sermon: BulletinSermonD
   );
 }
 
-export function BulletinPreviewPageClassic({ children }: { children: ReactNode }) {
+export function BulletinPreviewPageClassic({ children, data }: { children: ReactNode; data?: BulletinData }) {
+  const themeClass = getThemeCssClass(data?.footer?.theme);
   return (
-    <article id="bulletin-page" className="classic-bulletin-container shadow-sm print:shadow-none">
+    <article id="bulletin-page" className={cn("classic-bulletin-container shadow-sm print:shadow-none", themeClass)}>
       {children}
     </article>
   );
@@ -191,7 +193,7 @@ export function BulletinTemplateClassic({ data }: { data: BulletinData }) {
   ];
 
   return (
-    <BulletinPreviewPageClassic>
+    <BulletinPreviewPageClassic data={data}>
       <BulletinWatermarkClassic />
       <BulletinHeaderClassic header={data.header} />
       <BulletinTopInfoClassic items={data.top_info} />
