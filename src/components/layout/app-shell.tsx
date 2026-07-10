@@ -20,11 +20,11 @@ export async function AppShell({ children }: { children: ReactNode }) {
         <div className="absolute right-[-140px] top-1/4 h-[320px] w-[320px] rounded-full bg-accent/5 blur-[100px] sm:right-0 sm:h-[400px] sm:w-[400px]" />
       </div>
 
-      <div className="relative z-10 flex">
+      <div className="relative z-10 flex min-w-0 max-w-full">
         <Sidebar />
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 max-w-full overflow-x-hidden">
           <Topbar />
-          <main className="mx-auto w-full max-w-7xl px-4 py-6 pb-28 sm:px-6 lg:px-8 lg:pb-8">
+          <main className="mx-auto w-full max-w-7xl px-3 py-4 sm:px-6 lg:px-8 pb-28 lg:pb-8 min-w-0 max-w-full">
             {children}
           </main>
         </div>

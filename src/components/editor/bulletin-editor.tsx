@@ -202,8 +202,8 @@ export function BulletinEditor({
   }
 
   return (
-    <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,620px)_1fr]">
-      <div className="space-y-4">
+    <div className="grid min-w-0 max-w-full gap-4 sm:gap-6 lg:grid-cols-[minmax(0,620px)_1fr]">
+      <div className="space-y-4 min-w-0 max-w-full">
         {error ? <Alert tone="danger">{error}</Alert> : null}
         {message ? <Alert tone="info">{message}</Alert> : null}
         <section className="space-y-3 lg:hidden">

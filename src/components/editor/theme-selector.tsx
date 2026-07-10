@@ -59,8 +59,8 @@ export function ThemeSelector({
           </div>
 
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-sm text-on-surface uppercase tracking-wider">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="font-bold text-sm text-on-surface uppercase tracking-wider truncate block">
                 {selectedTheme.name}
               </span>
             </div>

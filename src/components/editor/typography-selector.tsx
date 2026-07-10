@@ -67,7 +67,7 @@ export function TypographySelector({
                 {selectedFont.description}
               </p>
             </div>
-            <div className="hidden sm:block rounded border border-border/40 bg-white px-2.5 py-1 text-xs font-semibold text-gray-800 shadow-inner shrink-0">
+            <div className="rounded border border-border/40 bg-white px-2.5 py-1 text-xs font-semibold text-gray-800 shadow-inner shrink-0">
               {selectedFont.sampleText}
             </div>
           </div>
@@ -110,7 +110,7 @@ export function TypographySelector({
                   </div>
 
                   <div className="flex items-center gap-2.5 shrink-0">
-                    <div className="hidden sm:block rounded border border-border/40 bg-white px-2 py-0.5 text-[11px] font-semibold text-gray-800 shadow-inner">
+                    <div className="rounded border border-border/40 bg-white px-2 py-0.5 text-[11px] font-semibold text-gray-800 shadow-inner">
                       {font.sampleText}
                     </div>
                     {isActive && (
@@ -125,15 +125,15 @@ export function TypographySelector({
       </div>
 
       {/* Continuous Font Size Manual Slider */}
-      <div className="space-y-3 rounded-2xl border border-border/60 bg-surface/50 p-4 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <ZoomIn className="h-4 w-4 text-primary-light" />
-            <h3 className="font-bold text-on-surface">
+      <div className="space-y-3 rounded-2xl border border-border/60 bg-surface/50 p-3 sm:p-4 shadow-sm min-w-0 max-w-full overflow-hidden">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            <ZoomIn className="h-4 w-4 text-primary-light shrink-0" />
+            <h3 className="font-bold text-xs sm:text-sm text-on-surface leading-snug">
               Perbesar Ukuran Teks Buletin (Kiri/Kanan)
             </h3>
           </div>
-          <span className="rounded-lg bg-primary/10 border border-primary/30 px-3 py-1 font-mono text-sm font-bold text-primary-light shadow-inner">
+          <span className="rounded-lg bg-primary/10 border border-primary/30 px-2.5 py-1 font-mono text-xs sm:text-sm font-bold text-primary-light shadow-inner shrink-0">
             {currentPercent}%
           </span>
         </div>
@@ -150,7 +150,7 @@ export function TypographySelector({
             Perkecil
           </button>
 
-          <div className="relative flex-1 flex items-center py-2">
+          <div className="relative flex-1 flex items-center py-2 min-w-0">
             <input
               type="range"
               min={100}
@@ -174,8 +174,8 @@ export function TypographySelector({
         </div>
 
         {/* Mobile HP Layout: Slider full width on top, buttons 2-columns below */}
-        <div className="sm:hidden space-y-3 pt-1">
-          <div className="relative flex items-center py-1">
+        <div className="sm:hidden space-y-3 pt-1 min-w-0">
+          <div className="relative flex items-center py-1 min-w-0">
             <input
               type="range"
               min={100}
@@ -187,12 +187,12 @@ export function TypographySelector({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => onSizeChange(Math.max(100, currentPercent - 1))}
               disabled={currentPercent <= 100}
-              className="flex items-center justify-center gap-1.5 rounded-xl border-2 border-border bg-surface-hover py-2.5 text-xs font-bold text-on-surface hover:border-primary hover:bg-primary/10 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-sm"
+              className="flex items-center justify-center gap-1.5 rounded-xl border-2 border-border bg-surface-hover py-2 text-xs font-bold text-on-surface hover:border-primary hover:bg-primary/10 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-sm"
             >
               <span className="text-base leading-none">−</span>
               Perkecil
@@ -201,7 +201,7 @@ export function TypographySelector({
               type="button"
               onClick={() => onSizeChange(Math.min(135, currentPercent + 1))}
               disabled={currentPercent >= 135}
-              className="flex items-center justify-center gap-1.5 rounded-xl border-2 border-border bg-surface-hover py-2.5 text-xs font-bold text-on-surface hover:border-primary hover:bg-primary/10 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-sm"
+              className="flex items-center justify-center gap-1.5 rounded-xl border-2 border-border bg-surface-hover py-2 text-xs font-bold text-on-surface hover:border-primary hover:bg-primary/10 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-sm"
             >
               <span className="text-base leading-none">+</span>
               Perbesar
@@ -210,22 +210,22 @@ export function TypographySelector({
         </div>
 
         {/* Labels underneath the slider */}
-        <div className="flex justify-between text-[10px] sm:text-xs font-semibold text-on-surface-muted select-none pt-1">
+        <div className="grid grid-cols-3 text-[10px] sm:text-xs font-semibold text-on-surface-muted select-none pt-1 gap-1">
           <span
             onClick={() => onSizeChange(100)}
-            className="cursor-pointer hover:text-primary transition-colors px-1 py-0.5 rounded hover:bg-surface-hover"
+            className="cursor-pointer hover:text-primary transition-colors py-0.5 rounded hover:bg-surface-hover text-left truncate"
           >
             ← Standar (100%)
           </span>
           <span
             onClick={() => onSizeChange(118)}
-            className="cursor-pointer hover:text-primary transition-colors px-1 py-0.5 rounded hover:bg-surface-hover"
+            className="cursor-pointer hover:text-primary transition-colors py-0.5 rounded hover:bg-surface-hover text-center truncate"
           >
             Tengah (118%)
           </span>
           <span
             onClick={() => onSizeChange(135)}
-            className="cursor-pointer hover:text-primary transition-colors px-1 py-0.5 rounded hover:bg-surface-hover"
+            className="cursor-pointer hover:text-primary transition-colors py-0.5 rounded hover:bg-surface-hover text-right truncate"
           >
             Maksimal (135%) →
           </span>
