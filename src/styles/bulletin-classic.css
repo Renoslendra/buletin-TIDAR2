@@ -339,3 +339,67 @@
   --bulletin-accent-line: linear-gradient(90deg, transparent, #3b2b24, transparent);
   --bulletin-watermark-filter: grayscale(0.7) contrast(0.3) brightness(1.4) sepia(0.4);
 }
+
+/* ========================================
+   FONT FAMILIES
+   ======================================== */
+.font-inter {
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif !important;
+}
+
+.font-cormorant {
+  font-family: var(--font-cormorant), Georgia, "Times New Roman", serif !important;
+}
+
+.font-century-gothic {
+  font-family: "Century Gothic", Arial, Helvetica, sans-serif !important;
+}
+
+/* ========================================
+   FONT SIZES (SCALING)
+   ======================================== */
+.size-large .classic-church-name {
+  font-size: 25.8px !important;
+}
+.size-large .classic-date {
+  font-size: 18.4px !important;
+}
+.size-large .classic-top-line {
+  font-size: 17px !important;
+}
+.size-large .classic-section-bar h2 {
+  font-size: 16.5px !important;
+}
+.size-large .classic-program-line,
+.size-large .classic-program-line-compact {
+  font-size: 16.8px !important;
+}
+.size-large .classic-program-list-compact .classic-line {
+  font-size: 16.2px !important;
+}
+.size-large .classic-sermon-title {
+  font-size: 18.8px !important;
+}
+
+.size-xlarge .classic-church-name {
+  font-size: 27.4px !important;
+}
+.size-xlarge .classic-date {
+  font-size: 19.6px !important;
+}
+.size-xlarge .classic-top-line {
+  font-size: 18px !important;
+}
+.size-xlarge .classic-section-bar h2 {
+  font-size: 17.5px !important;
+}
+.size-xlarge .classic-program-line,
+.size-xlarge .classic-program-line-compact {
+  font-size: 17.8px !important;
+}
+.size-xlarge .classic-program-list-compact .classic-line {
+  font-size: 17.2px !important;
+}
+.size-xlarge .classic-sermon-title {
+  font-size: 20px !important;
+}

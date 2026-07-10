@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { getThemeCssClass } from "@/lib/themes/bulletin-themes";
+import { getFontCssClass, getSizeCssClass } from "@/lib/themes/bulletin-fonts";
 import type {
   BulletinData,
   BulletinHeaderData,
@@ -174,8 +175,13 @@ export function BulletinSermonTitleClassic({ sermon }: { sermon: BulletinSermonD
 
 export function BulletinPreviewPageClassic({ children, data }: { children: ReactNode; data?: BulletinData }) {
   const themeClass = getThemeCssClass(data?.footer?.theme);
+  const fontClass = getFontCssClass(data?.footer?.fontFamily);
+  const sizeClass = getSizeCssClass(data?.footer?.fontSize);
   return (
-    <article id="bulletin-page" className={cn("classic-bulletin-container shadow-sm print:shadow-none", themeClass)}>
+    <article
+      id="bulletin-page"
+      className={cn("classic-bulletin-container shadow-sm print:shadow-none", themeClass, fontClass, sizeClass)}
+    >
       {children}
     </article>
   );

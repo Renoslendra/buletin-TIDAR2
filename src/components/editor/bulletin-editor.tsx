@@ -19,8 +19,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { PLACEHOLDER } from "@/lib/mapping/bulletin-mapper";
-import type { BulletinData, BulletinTheme, ProgramItem } from "@/types/bulletin";
+import type { BulletinData, BulletinFontFamily, BulletinFontSize, BulletinTheme, ProgramItem } from "@/types/bulletin";
 import { ThemeSelector } from "@/components/editor/theme-selector";
+import { TypographySelector } from "@/components/editor/typography-selector";
 
 function cloneData(data: BulletinData): BulletinData {
   return JSON.parse(JSON.stringify(data)) as BulletinData;
@@ -255,6 +256,26 @@ export function BulletinEditor({
                 setData((current) => ({
                   ...current,
                   footer: { ...current.footer, theme },
+                }))
+              }
+            />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent>
+            <TypographySelector
+              fontFamily={(data.footer?.fontFamily as BulletinFontFamily) || "poppins"}
+              fontSize={(data.footer?.fontSize as BulletinFontSize) || "normal"}
+              onFontChange={(fontFamily) =>
+                setData((current) => ({
+                  ...current,
+                  footer: { ...current.footer, fontFamily },
+                }))
+              }
+              onSizeChange={(fontSize) =>
+                setData((current) => ({
+                  ...current,
+                  footer: { ...current.footer, fontSize },
                 }))
               }
             />

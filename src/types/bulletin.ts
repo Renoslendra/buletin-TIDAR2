@@ -36,10 +36,20 @@ export type BulletinTheme =
   | "charcoal_slate"
   | "deep_espresso";
 
+export type BulletinFontFamily =
+  | "poppins"
+  | "inter"
+  | "cormorant"
+  | "century_gothic";
+
+export type BulletinFontSize = "normal" | "large" | "xlarge";
+
 export type BulletinFooterData = {
   tagline: string;
   template: string;
   theme?: BulletinTheme;
+  fontFamily?: BulletinFontFamily;
+  fontSize?: BulletinFontSize;
 };
 
 export type BulletinSourceTrace = {
