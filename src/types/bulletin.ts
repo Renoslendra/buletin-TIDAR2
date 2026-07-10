@@ -32,6 +32,7 @@ export type BulletinTheme =
   | "classic"
   | "elegant_navy"
   | "nature_green"
+  | "majestic_maroon"
   | "royal_purple";
 
 export type BulletinFooterData = {

@@ -296,7 +296,22 @@
 }
 
 /* ========================================
-   THEME: Royal Purple
+   THEME: Majestic Maroon
+   ======================================== */
+.theme-majestic-maroon {
+  --bulletin-label-color: #5c1d24;
+  --bulletin-value-color: #7a2832;
+  --bulletin-section-bg: #5c1d24;
+  --bulletin-section-text: #ffffff;
+  --bulletin-sermon-color: #5c1d24;
+  --bulletin-colon-color: #5c1d24;
+  --bulletin-strong-color: #5c1d24;
+  --bulletin-accent-line: linear-gradient(90deg, transparent, #5c1d24, transparent);
+  --bulletin-watermark-filter: grayscale(0.6) contrast(0.3) brightness(1.4) sepia(0.3) hue-rotate(330deg);
+}
+
+/* ========================================
+   THEME: Royal Purple (Backward compatible)
    ======================================== */
 .theme-royal-purple {
   --bulletin-label-color: #4a2d6b;

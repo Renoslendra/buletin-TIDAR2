@@ -44,13 +44,13 @@ export const BULLETIN_THEMES: ThemeConfig[] = [
     },
   },
   {
-    id: "royal_purple",
-    name: "Royal Purple",
-    description: "Ungu kerajaan, kesan mewah dan sakral",
+    id: "majestic_maroon",
+    name: "Majestic Maroon",
+    description: "Merah marun anggun, kesan khidmat dan sakral",
     previewColors: {
-      primary: "#4a2d6b",
-      secondary: "#d8c8e8",
-      accent: "#6b5a80",
+      primary: "#5c1d24",
+      secondary: "#e8c8cc",
+      accent: "#7a2832",
     },
   },
 ];
