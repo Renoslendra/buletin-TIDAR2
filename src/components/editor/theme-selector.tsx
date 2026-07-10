@@ -18,7 +18,7 @@ export function ThemeSelector({
         <Palette className="h-4 w-4 text-primary-light" />
         <h2 className="font-bold text-on-surface">Tema Buletin</h2>
       </div>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
         {BULLETIN_THEMES.map((theme) => {
           const isActive = value === theme.id;
           return (

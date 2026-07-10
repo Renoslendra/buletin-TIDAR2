@@ -53,6 +53,16 @@ export const BULLETIN_THEMES: ThemeConfig[] = [
       accent: "#7a2832",
     },
   },
+  {
+    id: "charcoal_slate",
+    name: "Charcoal Slate",
+    description: "Abu gelap sleek, kesan ultra modern dan minimalis",
+    previewColors: {
+      primary: "#2d3748",
+      secondary: "#cbd5e0",
+      accent: "#4a5568",
+    },
+  },
 ];
 
 export function getThemeConfig(theme?: BulletinTheme): ThemeConfig {
