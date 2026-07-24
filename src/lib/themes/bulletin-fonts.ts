@@ -75,9 +75,15 @@ export const BULLETIN_FONTS: FontConfig[] = [
     description: "Sans-serif ekstra lebar super jernih",
     sampleText: "SabatFlow GMAHK",
   },
+  {
+    id: "coco" as any,
+    name: "Coco Gothic",
+    description: "Geometric sans-serif elegan bergaya modern & bersih",
+    sampleText: "SabatFlow GMAHK",
+  },
 ];
 
-export function getFontConfig(font?: BulletinFontFamily): FontConfig {
+export function getFontConfig(font?: BulletinFontFamily | "coco"): FontConfig {
   return BULLETIN_FONTS.find((f) => f.id === font) ?? BULLETIN_FONTS[0];
 }
 

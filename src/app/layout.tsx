@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Great_Vibes, Inter, Poppins } from "next/font/google";
+import { Cormorant_Garamond, Great_Vibes, Inter, Poppins, Jost } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,6 +24,11 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
 });
 
+const jost = Jost({
+  variable: "--font-jost",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "SabatFlow",
   description: "Generator buletin Ibadah Sabat GMAHK Tidar 2 Surabaya",
@@ -37,7 +42,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${inter.variable} ${cormorant.variable} ${greatVibes.variable} ${poppins.variable} h-full antialiased`}
+      className={`${inter.variable} ${cormorant.variable} ${greatVibes.variable} ${poppins.variable} ${jost.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>

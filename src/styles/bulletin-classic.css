@@ -445,6 +445,10 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif !important;
 }
 
+.font-coco {
+  font-family: var(--font-jost), "Futura PT", Futura, sans-serif !important;
+}
+
 /* ========================================
    GEORGIA SERIF WIDTH TUNING
    ======================================== */
